@@ -1,0 +1,107 @@
+<nav class="navbar navbar-default" ng-class="{'navbar-fixed-top':fixed, 'navbar-unfixed-top':!fixed}" role="navigation">
+    <div class="navbar-header">
+       <!-- APP TITLE -->
+        <div ng-if="search">
+            <!-- SEARCH BUTTON FOR XS SCREENS -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-search">
+                <span class="sr-only">Toggle navigation</span>
+                <i style="color:#777777" class="icon-search icon-large"></i>
+            </button>
+        </div>
+        <a class="navbar-brand" ui-sref="home" style="font-family: 'Grand Hotel', cursive;font-size:2em;">Spotly</a>
+        <div ng-if="!isAuthenticated">
+            <!-- MENU LINKS FOR XS SCREENS -->
+            <ul class="nav navbar-nav visible-xs pull-right" id="navbar-xs">
+                <li><a href="/login">Sign In</a></li>
+                <li class="navbar-left">
+                    <button type="submit" class="btn btn-success">Sign Up</button>
+                </li>
+            </ul>
+        </div>
+        <div ng-if="isAuthenticated">
+            <!-- MENU LINKS FOR XS SCREENS -->
+            <ul class="nav navbar-nav visible-xs pull-right" id="navbar-xs">
+                <li><a href="/maps/#"><i class="icon-globe icon-large"></i></a></li>
+                <button type="button" class="navbar-toggle navbar-imgToggle" data-toggle="collapse" data-target="#navbar-user">
+                    <span class="sr-only">Toggle navigation</span>
+                    <img src="/img/Avatar-128.png" class="img-small">
+                </button>
+            </ul>
+        </div> 
+    </div>
+    <!-- User nav bar -->
+    <div class="navbar-collapse collapse" id="navbar-user">
+        <ul class="nav navbar-nav">
+            <li style="width:100%"><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+
+    <div ng-if="search">
+        <!-- Search nav bar -->
+        <div class="navbar-collapse collapse" id="navbar-search">
+            <ul class="nav navbar-nav col-xs-12" style="margin-left:10px;"> 
+                <form class="navbar-form navbar-left" style="margin-bottom:0px;margin-top:10px;" role="explore">
+                    <div id="nav-search-spot" class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" style="height:34px;line-height:1.428571429;font-size:14px;"><i class="icon-map-marker"></i></span>
+                            <input type="text" class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="k-xs" name="k" placeholder="Search">
+                        </div>
+                    </div>
+                    <div id="nav-search-location" class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" style="height:34px;line-height:1.428571429;font-size:14px;"><i class="icon-location-arrow"></i></span>
+                            <input type="text" class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="l-xs" name="l" placeholder="Around">
+                        </div>
+                    </div>
+                    <input type="hidden" name="lat" id="lat-xs">
+                    <input type="hidden" name="lng" id="lng-xs">
+                    <button id="nav-search-button" type="submit" class="btn btn-primary" style="height:34px;line-height:1.428571429;font-size:14px;">
+                        <i class="icon-search icon-white"></i> Find Spots
+                    </button>
+                </form> 
+            </ul>
+        </div>
+    </div>
+
+    <!-- NAV BAR FOR SMALL, MEDIUM & LARGE SCREENS -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <div ng-if="search">
+            <div ng-form name="exploreForm" class="navbar-form navbar-left col-lg-7 col-md-9 col-sm-8 hidden-xs" style="margin-bottom:0px;margin-top:10px;" role="explore" ng-controller="ExploreFormController">
+                <div id="nav-search-spot" class="form-group col-lg-5 col-md-5 col-sm-5">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="height:34px;line-height:1.428571429;font-size:14px;"><i class="icon-map-marker"></i></span>
+                        <input type="text" tag-autocomplete="{{tagsAutocompleteOptions}}" class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="k" name="k" ng-model="k" placeholder="Search"
+                        onblur="if (this.value == '') {this.value = 'All Sports';}" onfocus="this.value = ''" />
+                    </div>
+                </div>
+                <div id="nav-search-location" class="form-group col-lg-5 col-md-5 col-sm-5">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="height:34px;line-height:1.428571429;font-size:14px;"><i class="icon-location-arrow"></i></span>
+                        <input type="text" loc-autocomplete class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="l" name="l" placeholder="Around"
+                        onblur="if (this.value == '') {this.value = 'My Location';}" ng-model="l" onfocus="this.value = ''"  />
+                    </div>
+                </div>
+                <button id="nav-search-button" ng-click="explore()" type="submit" class="btn btn-primary" style="height:34px;line-height:1.428571429;font-size:14px;"> <i class="icon-search icon-white"></i></button>
+            </div>
+        </div>
+        <ul class="pull-right nav navbar-nav visible-lg visible-md visible-sm">
+            <!-- MENU LINKS FOR MEDIUM & LARGE SCREENS -->
+            <!-- if !Authenticated -->
+                <li ng-if="!isAuthenticated"><a href="/login">Sign In</a></li>
+                <form ng-if="!isAuthenticated" class="navbar-form navbar-left" role="signup">
+                    <button type="submit" class="btn btn-success">Sign Up</button>
+                </form>
+            <!-- else -->
+            <div ng-if="isAuthenticated">
+                <li><a href="/maps/#"><i class="icon-globe icon-large"></i> Maps</a></li>
+                <li class="dropdown nav-img">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/Avatar-128.png" class="img-small"> USERNAME</a>
+                    <ul class="dropdown-menu">
+                      <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+            </div>
+            <!-- end if !Authenticated -->
+        </ul>
+    </div>
+</nav>

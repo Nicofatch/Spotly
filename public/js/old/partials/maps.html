@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <ul class="nav nav-tabs visible-sm visible-lg visible-md header-tabs">
+        <li class=""><a href="#my-maps" data-toggle="tab"><i class="icon-globe"></i> My Maps</a></li>
+        <li class=""><a href="#last-contributions" data-toggle="tab"><i class="icon-pencil"></i> Last Contributions</a></li>
+        <li class=""><a href="#hot" data-toggle="tab"><i class="icon-star"></i> Hot</a></li>
+        <div class="pull-right" data-ui-view="newMapButton">
+          <a class="btn btn-success" ui-sref="maps.new"><i class="icon-plus-sign"></i> Create a Map</a>
+        </div>
+      </ul>
+    <div class="panel-body" data-ng-controller="MapsController">
+
+
+    <!--<div class="col-lg-12 well">
+      You have no contribution yet. <a href="#"> Create a Map</a>
+    </div>
+    <div class="col-lg-3">
+        <div class="list-group panel">
+          <a href="#" class="list-group-item">
+            <p class="lead">Les meilleurs bars à chat de Paris</p>
+            <p>Cette map présente une sélection des meilleurs bars à chat de Paris</p>
+            <p><span class="label label-info">cinema</span> <span class="label label-default">chaise</span></p>
+            <p><small>Modified 3 days ago</small></p>
+            <p>
+              <span class="badge badge-primary"><i class="icon-map-marker"></i> <b>14</b></span>
+              <span class="badge badge-primary"><i class="icon-user"></i> <b>12</b></span>
+            </p>
+          </a>
+        </div> 
+      </div>-->
+        <div class="row visible-sm visible-lg visible-md">
+        
+        <form class="form-inline col-md-4 col-lg-4 col-sm-6" role="form">
+          <div class="form-group">
+            <label class="sr-only" for="maps-search-input">Find a map...</label>
+            <input type="text" class="form-control" id="maps-search-input" placeholder="Find a map...">
+          </div>
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+        <ul class="nav nav-pills pull-right">
+          <li ng-class="{'active' : visibility == 'all'}"><a ng-click="visibility = 'all'" href>All</a></li>
+          <li ng-class="{'active' : visibility == 'private'}"><a ng-click="visibility = 'private'" href>Private</a></li>
+          <li ng-class="{'active' : visibility == 'public'}"><a ng-click="visibility = 'public'" href>Public</a></li>
+        </ul>
+        </div>
+
+        <div class="visible-xs">
+          <div class="pull-right">
+          <button class="btn btn-success"><i class="icon-plus-sign"></i> Map</button>
+        </div>
+        <ul class="nav nav-pills">
+            <li class="active"><a href="#">Maps</a></li>
+            <li class=""><a href="#">Contributions</a></li>
+            <li class=""><a href="#">Hot</a></li>
+          </ul>
+            
+        </div>
+        <hr style="">
+
+        <div data-ui-view="newMapForm">
+
+        </div>
+
+        <div data-ng-repeat="map in maps | orderBy:'modificationDate':true | filter:visibilityFilter">  
+          <div class="row" style="height:100%">
+              
+            <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
+              <span class="map-icon-container">
+                <i class="icon-globe icon-3x visible-lg visible-sm visible-md map-icon"></i> 
+              </span>
+              <div class="map-info-container">
+                <p class="lead">
+                  <b><a href="#/{{map._id}}">{{map.title}}</a></b></p>
+                <p>{{map.description}}</p>
+                <p>
+                  <span data-ng-repeat="tag in map.tags"><span ng-class="tagClass($parent.$index, $index)">{{tag}}</span> </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+              <span class="pull-right">
+                <small>Modified 3 days ago</small> 
+                <span class="badge badge-primary"><i class="icon-map-marker"></i> <b>{{map.spots.length}}</b></span> 
+                <span class="badge badge-primary"><i class="icon-user"></i> <b>{{map.contributors_count}}</b></span>
+                <span ng-show="map.private" class="badge badge-primary"><i class="icon-lock"></i></span>
+              </span>
+            </div>
+          </div>
+          <hr> 
+        </div>
+        
+
+      </div>
+  </div>
+</div>
+</div>
+<script>
+
+  $(document).ready(function(){
+
+  $('.header-tabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+  $('.header-tabs a:first').tab('show')
+});
+</script>

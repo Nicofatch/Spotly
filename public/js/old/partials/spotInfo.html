@@ -1,0 +1,33 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		<h1 id="map-title"><i class="icon-map-marker"></i> {{spot.title}}</h1>
+		<p>{{spot.description}}</p>
+		<div id="map-tags-container">        
+			<span data-ui-view="newTags" id="mag-tag-addLink-container">
+				<a href ng-click="tags()" class="pull-left" id="map-tag-addLink"><i class="icon-tags"></i> Add tags</a>
+			</span>
+			<div class="row">&nbsp;</div>
+			<span id="map-tags">
+				<span data-ng-repeat="tag in spot.tags" style="display:inline-block">
+					<button ng-click="deleteTag(tag)" class="btn btn-link btn-tag">
+						<span ng-class="tagClass($index)">x {{tag}}</span>
+					</button> 
+				</span> 
+			</span> 
+		</div>
+		<div class="row">
+			<div class="col-lg-12">              
+	            <form accept-charset="UTF-8" action="" method="POST">
+	                <textarea class="form-control counted" name="message" placeholder="Type in your message" rows="5" style="margin-bottom:10px;"></textarea>
+	                <h6 class="pull-right" id="counter">320 characters remaining</h6>
+	                <button class="btn btn-info" type="submit">Post New Message</button>
+	            </form>
+	        </div>
+		</div>
+	</div>
+</div>
+<script>
+ $(document).ready(function(){
+	
+});
+</script>

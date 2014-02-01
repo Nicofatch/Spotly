@@ -1,0 +1,43 @@
+var uu      = require('underscore')
+  , Constants = require('./constants');
+
+var build_errfn = function(errmsg, response) {
+    return function errfn(err) {
+	console.log(err);
+	response.send(errmsg);
+    };
+};
+
+var indexfn = function(request, response) {
+    response.render("homepage", {
+        app: '', 
+	    title: Constants.APP_NAME
+    });
+};
+
+var mapsfn = function(request, response) {
+    response.render("maps", {
+	   app: 'app',
+       title: Constants.APP_NAME
+    });
+};
+
+var mapfn = function(request, response) {
+    response.render("map", {
+	   title: Constants.APP_NAME
+    });
+};
+
+var define_routes = function(dict) {
+    var toroute = function(item) {
+	return uu.object(uu.zip(['path', 'fn'], [item[0], item[1]]));
+    };
+    return uu.map(uu.pairs(dict), toroute);
+};
+
+var ROUTES = define_routes({
+    '/': indexfn,
+    '/maps': mapsfn
+});
+
+module.exports = ROUTES;
