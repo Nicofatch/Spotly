@@ -1,3 +1,4 @@
+// TODO: reorganize modules
 var app = angular.module('app', [
   "ui.router",
   "ui.utils",
@@ -5,19 +6,23 @@ var app = angular.module('app', [
   "spot",
   "directives.spotList",
   "directives.displaySlider",
-  "directives.tagAutocomplete",
-  "directives.locAutocomplete",
+  "directives.input",
   "home",
-  "navbar"
+  "navbar",
+  'services.httpRequestTracker',
+  'security',
+  // 'ui.bootstrap.modal',
+  // 'ui.bootstrap.rating'
   ]).run(
-    [ '$rootScope', '$state', '$stateParams',
-      function ($rootScope, $state, $stateParams) {
+    [ '$rootScope', '$state', '$stateParams','security',
+      function ($rootScope, $state, $stateParams, security) {
           // It's very handy to add references to $state and $stateParams to the $rootScope
           // so that you can access them from any scope within your applications.For example,
           // <li ng-class="{ active: $state.includes('contacts.list') }"> will set the <li>
           // to active whenever 'contacts.list' or one of its decendents is active.
           $rootScope.$state = $state;
           $rootScope.$stateParams = $stateParams;
+          security.requestCurrentUser();
       }])
   .config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];

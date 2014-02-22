@@ -2,6 +2,11 @@ body {
 	background:url(/img/background-darkwood.jpg)
 }
 
+/** Bootstrap UI 0.10 fix **/
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+
+
 /******* HOME PAGE *************/
 
 .home-slider-top
@@ -35,6 +40,9 @@ body {
 
 #home-explore-form {
 	margin-bottom: 300px;
+	width:807px;
+	padding:10px 0;
+	background-color: rgba(0,0,0,0.5);
 }
 
 .home-slider-top form

@@ -1,14 +1,12 @@
 'use strict';
 
-angular.module('directives.locAutocomplete',[])
+angular.module('directives.input')
 .directive('locAutocomplete', function() {
 	return {
 		require:'ngModel',
 		link:function (scope, element, attrs, ngModelCtrl) {
 			// To do delete ?
 			ngModelCtrl.$formatters.push(function(val) {
-				console.log('formatter called with val : ');
-				console.log(val);
 				return val.address;
 			});
 

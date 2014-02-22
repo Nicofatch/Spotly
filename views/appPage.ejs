@@ -5,12 +5,17 @@
 <% stylesheet('/css/vendor/leaflet.awesome-markers.css') -%>
 <% stylesheet('/css/vendor/select2.css') -%>
 <% stylesheet('/css/vendor/lightbox.css') -%>
+<% stylesheet('/css/vendor/bootstrap-wysihtml5-0.0.2.css') -%>
 
 <!-- VENDOR JS -->
 <!-- script('//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js') -%>-->
 <% script('/js/vendor/angular-file-upload-shim.js') -%>
-<% script('/js/vendor/angular.js') -%>
+<% script('/js/vendor/angular.min.js') -%>
 <% script('/js/vendor/angular-ui-router.js') -%>
+<% script('/js/vendor/ui-bootstrap-tpls-0.10.0.min.js') -%>
+<% script('/js/vendor/wysihtml5-0.3.0.js') -%>
+<% script('/js/vendor/bootstrap-wysihtml5-0.0.2.js') -%>
+<% script('/js/vendor/jquery.wysihtml5_size_matters.js') -%>
 <% script('/js/vendor/ui-utils.min.js') -%>
 <% script('http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js') -%>
 
@@ -27,14 +32,27 @@
 <% script('/js/app/navbar/navbar.js') -%>
 <% script('/js/app/explore/explore.js') -%>
 <% script('/js/app/spot/comment/comment.js') -%>
+<% script('/js/app/spot/topo/topo.js') -%>
 <% script('/js/common/directives/spotList/spotList.js') -%>
 <% script('/js/common/directives/comments/displaySlider.js') -%>
+<% script('/js/common/directives/inputs/index.js') -%>
+<% script('/js/common/directives/inputs/richTextEditor.js') -%>
 <% script('/js/common/directives/inputs/tagAutocomplete.js') -%>
 <% script('/js/common/directives/inputs/locAutocomplete.js') -%>
 <% script('/js/common/vendor/angular-file-upload.js') -%>
 <% script('/js/app/app.js') -%>
 <% script('/js/common/services/spotsService.js') -%>
 <% script('/js/common/services/utilsService.js') -%>
+<% script('/js/common/services/httpRequestTracker.js') -%>
+<% script('/js/common/security/authorization.js') -%>
+<% script('/js/common/security/index.js') -%>
+<% script('/js/common/security/interceptor.js') -%>
+<% script('/js/common/security/retryQueue.js') -%>
+<% script('/js/common/security/security.js') -%>
+<% script('/js/common/security/login/login.js') -%>
+<% script('/js/common/security/login/LoginFormController.js') -%>
+<% script('/js/common/security/login/toolbar.js') -%>
+
 
 <!-- DOM -->
 <!--<div class="panel panel-default" data-ui-view="">-->

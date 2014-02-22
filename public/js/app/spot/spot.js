@@ -1,6 +1,9 @@
 //This controller retrieves data from the mapService and associates it with the $scope
 //The $scope is ultimately bound to the map view
-angular.module('spot', ['angularFileUpload'])
+angular.module('spot', [
+  'spot.comment',
+  'spot.topo'
+])
 .config(
     [ '$stateProvider', '$urlRouterProvider',
       function ($stateProvider, $urlRouterProvider) {   
@@ -12,11 +15,15 @@ angular.module('spot', ['angularFileUpload'])
               views: {
                     'navbar': {
                         templateUrl:'/js/app/navbar/navbar.tpl.html',
-                        controller: 'NavbarController',
+                        controller: 'NavbarController'
                     },
                     'main': {
                         templateUrl:'/js/app/spot/spot.tpl.html',
-                        controller: 'SpotController',
+                        controller: 'SpotController'
+                    },
+                    'spot.topo': {
+                        templateUrl:'/js/app/spot/topo/topo.tpl.html',
+                        controller: 'TopoController'
                     }
                 },
                 data: {
@@ -31,10 +38,22 @@ angular.module('spot', ['angularFileUpload'])
                   template: ''
                 },
                 'newCommentForm': {
-                  templateUrl:'/js/app/spot/comment/newCommentForm.tpl.html',
+                  templateUrl:'/js/app/spot/comment/comment.edit.tpl.html',
                   controller: 'CommentController'
                 }
               }
+          })
+          .state('spot.topo', {  
+            url:'/topo',
+            views: {
+              'topo.action': {
+                template: '<a class="btn btn-success" ng-click="save()"><small><i class="fa fa-success"></i></small> Save changes</a>'
+              },
+              'topo.main': {
+                templateUrl:'/js/app/spot/topo/topo.edit.tpl.html',
+                controller: 'TopoEditController'
+              }
+            }
           })
       }
     ]

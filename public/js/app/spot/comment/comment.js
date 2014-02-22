@@ -1,6 +1,7 @@
 //This controller retrieves data from the mapService and associates it with the $scope
 //The $scope is ultimately bound to the map view
-angular.module('spot')
+angular.module('spot.comment',[
+  'angularFileUpload'])
 .controller('CommentController', function ($scope, $state, spotsService, utilsService, $stateParams, $upload, appSettings) {
 
   init();

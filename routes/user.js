@@ -1,48 +1,22 @@
 var passport = require('passport')
-    , url = require('url');
+    , security = require('../config/security');
 
-exports.account = function(req, res) {
-  res.render('account', { user: req.user });
-};
+exports.postLogin = function(req,res,next){
+  security.login(req,res,next);
+}
 
+exports.postLogout = function(req,res,next){
+  security.logout(req,res,next);
+}
 
-exports.admin = function(req, res) {
-  res.send('access granted admin!');
-};
+exports.authenticatedUser = function(req, res) {
+  security.authenticationRequired(req, res, function() { security.sendCurrentUser(req, res); });
+}
 
-exports.getLogin = function(req, res) {
-  res.render('loginForm', {
-    user: req.user,
-    message: req.session.messages,
-    title:'Sign In',
-    navbar: {
-      fixed: false,
-      search: false
-    }
-  });
-  req.session.messages = null;
-};
+exports.adminUser = function(req, res) {
+  security.adminRequired(req, res, function() { security.sendCurrentUser(req, res); });
+}
 
-// POST /login
-//   This is an alternative implementation that uses a custom callback to
-//   acheive the same functionality.
-exports.postLogin = function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err) }
-    if (!user) {
-      req.session.messages =  [info.message];
-      return res.redirect('/login')
-    }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      req.session.messages = null;
-      if (req.body.redirectUrl) { return res.redirect(req.body.redirectUrl); }
-      return res.redirect('/');
-    });
-  })(req, res, next);
-};
-
-exports.logout = function(req, res) {
-  req.logout();
-  res.redirect('/');
-};
+exports.currentUser = function(req, res) {
+  security.sendCurrentUser(req,res);
+}

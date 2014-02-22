@@ -1,9 +1,8 @@
 //This controller retrieves data from the mapService and associates it with the $scope
 //The $scope is ultimately bound to the map view
-angular.module('navbar',[])
+angular.module('navbar',['security','services.httpRequestTracker'])
 
-.controller('NavbarController', function ($scope, appSettings, $rootScope, $state, $stateParams, $location) {
-
+.controller('NavbarController', function ($scope, appSettings, $rootScope, $state, $stateParams, $location, security, httpRequestTracker) {
     
     $scope.tagsAutocompleteOptions = {
         serviceUrl: appSettings.apiServer + appSettings.apiUri + '/tags/search/',
@@ -14,7 +13,8 @@ angular.module('navbar',[])
         //console.log($state);
         $scope.search = $state.current.data.search;
         $scope.fixed = $state.current.data.fixed;
-        $scope.isAuthenticated = false;
+        $scope.isAuthenticated = security.isAuthenticated;
+        $scope.isAdmin = security.isAdmin;;
 
         $rootScope.k = $state.params.k;
         $rootScope.l = {};
@@ -23,6 +23,9 @@ angular.module('navbar',[])
         $rootScope.l.lng = $state.params.lng;
     }
 
+    $scope.hasPendingRequests = function () {
+        return httpRequestTracker.hasPendingRequests();
+    };
 
     $scope.$watch('$state.params',function(){
         init();
@@ -30,11 +33,7 @@ angular.module('navbar',[])
 
 })
 .controller('ExploreFormController', function ($scope, $rootScope, $state) {
-
-    $scope.$watch('$state.params',function(){
-
-    })
-
+    
     $scope.explore = function(){
         console.log($scope.k);
         console.log($scope.l);

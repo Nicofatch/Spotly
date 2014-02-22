@@ -1,5 +1,7 @@
-var express = require('express')
+var fs = require('fs')
+  , express = require('express')
   , http    = require('http')
+  , https = require('https')
   , path    = require('path')
   , async   = require('async')
   , engine = require('ejs-locals')
@@ -8,14 +10,24 @@ var express = require('express')
   , comments = require('./api/comments')
   , pictures = require('./api/pictures')
   , tags = require('./api/tags')
-  , pass = require('./config/pass')
+  , security = require('./config/security')
   , passport = require('passport')
   , user_routes = require('./routes/user')
-  , basic_routes = require('./routes/basic');
+  , basic_routes = require('./routes/basic')
+  , xsrf = require('./lib/xsrf')
+  , protectJSON = require('./lib/protectJSON')
+  , security = require('./config/security')
+
+//var privateKey  = fs.readFileSync(__dirname + '/cert/privatekey.pem').toString();
+//var certificate = fs.readFileSync(__dirname + '/cert/certificate.pem').toString();
+//var credentials = {key: privateKey, cert: certificate};
 
 Constants = require('./constants');
+//require('express-namespace');
 
 var app = express();
+//var secureServer = https.createServer(credentials, app);
+var server = http.createServer(app);
 
 // ## CORS middleware
 // see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
@@ -45,19 +57,39 @@ app.use(express.logger("dev"));
 app.use(express.cookieParser());
 app.use(express.bodyParser({uploadDir:'./uploads'}));
 app.use(express.methodOverride());
-app.use(express.session({ secret: 'keyboard cat' }));
+//app.use(express.session({ secret: 'keyboard cat' }));
+app.use(express.cookieSession({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(allowCrossDomain);
+app.use(protectJSON);
+app.use(xsrf);
+
+// Initialize security
+security.initialize();
+
+/*app.use(function(req, res, next) {
+  if ( req.user ) {
+    console.log('Current User:', req.user.username);
+  } else {
+    console.log('Unauthenticated');
+  }
+  next();
+});*/
 
 // Site navigation requests
 app.get('/',basic_routes.app);
 // app.get('/maps',pass.ensureAuthenticated,basic_routes.maps);
 // app.get('/login',user_routes.getLogin);
-// app.post('/login',user_routes.postLogin);
+app.post('/login',security.login);
+app.post('/logout',security.logout);
 // app.get('/logout',user_routes.logout);
 // app.get('/explore',basic_routes.explore);
 // app.get('/spot',basic_routes.spot);
+app.get('/current-user',user_routes.currentUser);
+app.get('/authenticated-user',user_routes.authenticatedUser);
+app.get('/admin-user',user_routes.adminUser);
+
 
 // API requests
 app.get('/api/maps',maps.findAll);
@@ -84,7 +116,13 @@ app.post('/api/comments',comments.add);
 
 app.post('/api/pictures',pictures.add);
 
+app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+
 var port = process.env.PORT || 5000;
-app.listen(port, function() {
+var securePort = process.env.SECURE_PORT || 443;
+
+server.listen(port, function() {
   console.log("Listening on " + port);
 });
+//secureServer.listen(securePort);
+//console.log('Listening on secure port ' + securePort);
