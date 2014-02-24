@@ -8,6 +8,8 @@ var fs = require('fs')
   , maps = require('./api/maps')
   , spots = require('./api/spots')
   , comments = require('./api/comments')
+  , topos = require('./api/topos')
+  , datas = require('./api/datas')
   , pictures = require('./api/pictures')
   , tags = require('./api/tags')
   , security = require('./config/security')
@@ -111,8 +113,13 @@ app.get('/api/spots/:k/:lng/:lat',spots.search);
 app.put('/api/spots/:id',spots.update);
 app.get('/api/spots/:id',spots.findById);
 app.get('/api/spots/:id/comments',comments.findBySpotId);
+app.get('/api/spots/:id/topo',topos.findBySpotId);
+app.get('/api/spots/:id/data',datas.findBySpotId);
 
 app.post('/api/comments',comments.add);
+
+app.put('/api/topos/:id',topos.update);
+app.put('/api/datas/:id',datas.update);
 
 app.post('/api/pictures',pictures.add);
 
