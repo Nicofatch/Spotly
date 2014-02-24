@@ -6,7 +6,8 @@ var BSON=connection.BSON;
 
 exports.generate = function(req, res) {
     var sports=["Randonnée","Vélo","Chasse sous-marine","Escalade","Footing","Slackline","Skateboarding","Base Jump"];
-    var sport;
+    var sport;  
+    var spotId;
     var item={};
     for (var i=0;i<100;i++) {
         for (var j=0;j<100;j++) {
@@ -19,12 +20,80 @@ exports.generate = function(req, res) {
                 "tags": [ sport ],
                 "likes": []
             };
+
             db.collection('spots', function(err, collection) {
                 collection.insert(item, {safe:true}, function(err, result) {
                     if (err) {
                         res.send({'error':'An error has occurred'});
                     } else {
                         //console.log('Success: ' + JSON.stringify(result[0]));
+                        spotId = result[0]._id;
+                        var topo = {
+                            "text":"<h2>Accès</h2>De Chamonix, direction le col des Montets. A la sortie d’Argentière, 1km après les lacets, se garer au parking de Tré-le-Champ Le-Haut, juste avant le Col des Montets.<br><br><h2>Difficultés - Remarques</h2>Pendant la montée, après <b>l’Aiguillette d’Argentière</b>, on rencontre toute une série d’échelles et d’escaliers, ainsi que des mains courantes pour certains passages en vire. Sans être difficiles, ni très exposés, ces passages demandent un peu de vigilance et peuvent éprouver les personnes vraiment sensibles au vertige.<br><br>Le retour peut se faire par le même sentier ou bien par un sentier plus aisé permettant ainsi de faire une boucle.<br><br><h2>Descriptif de l'itinéraire</h2>Du parking de <b>Tré-le-Champ le-Haut</b>, prendre le sentier (GR) en direction de <b>l’Aiguillette d’Argentière</b>. Il s’élève un moment au-dessus de la route, puis monte à flanc dans les mélèzes.<br><br><span>On laisse sur la gauche le sentier descendant sur&nbsp;<b>Argentière&nbsp;</b>pour continuer sur la droite et rejoindre par des lacets le pied des falaises prisées des grimpeurs.<br><br></span><span>Le sentier balcon longe alors les falaises jusqu’à l<b>’Aiguillette d’Argentière</b>.</span><span>La partie câblée et équipée d’échelles débute juste après&nbsp;l’Aiguillette.</span><span>Une première série d’échelles est suivie par un passage en vire, puis de nouveau des échelles pour gagner une traversée facile sur un bon sentier.</span><span>La suite passe par une seconde série d’échelles, des marches et une main courante.</span><br><br>Ces difficultés passées, des lacets serrés mènent jusqu’à un grand cairn à la croisée de plusieurs chemins, notamment celui montant de <b>la Flégère.</b> Poursuivre en montant tout droit en direction du <b>lac Blanc</b> et lorsque le sentier part sur la gauche, grimper sur une bosse à droite pour découvrir les lacs inférieurs plus calmes que le lac supérieur situé sur le chemin montant au <b>lac blanc</b>, sous le chalet du <b>lac Blanc.<br><br><br></b>",
+                            "creationDate": new Date(),
+                            "modificationDate": new Date(),
+                            "lastModifiedBy": 'Bob',
+                            "spot_id" : spotId
+                        }
+                        db.collection('topos', function(err, collection) {
+                            collection.insert(topo, {safe:true}, function(err, result) {
+                                if (err) {
+                                    res.send({'error':'An error has occurred'});
+                                } else {
+                                    //console.log('Success: ' + JSON.stringify(result[0]));
+                                }
+                            });
+                        });
+                        var data = {
+                            table:
+                            [     
+                              {
+                                key:'Difficulty',
+                                value:'4',
+                                type:'stars'
+                              },
+                              {
+                                key:'Duration',
+                                value:'4.5',
+                                type:'h'
+                              },
+                              {
+                                key:'Length',
+                                value:'9',
+                                type:'km'
+                              },
+                              {
+                                key:'Map',
+                                value:'IGN TOP25 3630 OT Chamonix',
+                                type:'text'
+                              },
+                              {
+                                key: 'Elevation',
+                                value: '800',
+                                type: 'm'
+                              },
+                              {
+                                key: 'Starting elevation',
+                                value: '1430',
+                                type: 'm'
+                              },
+                              {
+                                key: 'Highest Point',
+                                value: '2211',
+                                type: 'm'
+                              }
+                            ],
+                            spot_id:spotId
+                        };
+                        db.collection('datas', function(err, collection) {
+                            collection.insert(data, {safe:true}, function(err, result) {
+                                if (err) {
+                                    res.send({'error':'An error has occurred'});
+                                } else {
+                                    //console.log('Success: ' + JSON.stringify(result[0]));
+                                }
+                            });
+                        });
                     }
                 });
             });

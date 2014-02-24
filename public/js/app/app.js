@@ -27,7 +27,7 @@ var app = angular.module('app', [
   .config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
   })
-  .value('$anchorScroll', angular.noop)
+  //.value('$anchorScroll', angular.noop)
   .constant('appSettings',{
     apiUri:'/api',
     apiServer: 'http://192.168.137.10:5000'

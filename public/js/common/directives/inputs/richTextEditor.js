@@ -12,10 +12,10 @@ angular.module('directives.input')
 
           var textarea = element.wysihtml5({
             "html": false,
-             "stylesheets": ["http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css", "css/vendor/editor.css"]
+             "stylesheets": ["css/vendor/bootstrap.custo.css"]
           });
           // $('iframe.wysihtml5-sandbox').wysihtml5_size_matters();
-          element.focus();
+          //element.focus();
 
           var editor = textarea.data('wysihtml5').editor;
 

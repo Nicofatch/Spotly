@@ -24,10 +24,12 @@ angular.module('spot.comment',[
       'spot_id':$scope.spot._id,  
       'author_id':0
     };
+    
+      spotsService.insertComment(newComment).then(function(data) {
+        // Nothing
+      });
 
-    spotsService.insertComment(newComment).then(function(data) {
       $scope.comments.push(data);
-    });
 
        // Redirect to parent (map)
        $state.go('spot');

@@ -106,20 +106,20 @@
 					</div>
 				</div>
 
-				<div ng-controller="TopoController">
-					<div ng-include="'/js/app/spot/topo/topo.tpl.html'"></div>
-				</div>
+				
+				<div ng-controller="TopoController" ng-include="'/js/app/spot/topo/topo.tpl.html'"></div>
+				
 
 				<!-- STORIES -->
 				<div class="panel panel-default">
 					<ul class="nav nav-tabs header-tabs">
 						<li><a href="#stories" data-toggle="tab3"><b>Stories ({{comments.length}})</b></a></li>
-						<div class="pull-right" data-ui-view="newCommentButton">
-							<a class="btn btn-success" ui-sref="spot.comment"><i class="fa fa-plus-sign"></i> Add a Story</a>
+						<div class="pull-right" data-ui-view="comment.action">
+							<a class="btn btn-primary" ui-sref="spot.comment"><i class="fa fa-plus-sign"></i> Add a Story</a>
 						</div>
 					</ul>
 					<div class="panel-body">
-						<div data-ui-view="newCommentForm"></div>
+						<div data-ui-view="comment.form"></div>
 						<div data-ng-repeat="comment in comments | orderBy:'modificationDate':true">
 							<div ng-include src="'comment.tpl.html'"></div>
 						</div>
@@ -135,6 +135,8 @@
 						<map spot="{{spot}}" class="map"></map>
 					</div>
 				</div>
+
+				<div ng-controller="DataController" ng-include="'/js/app/spot/data/data.tpl.html'"></div>
 			</div>
 		</div>
 	</div>

@@ -2,7 +2,8 @@
 //The $scope is ultimately bound to the map view
 angular.module('spot', [
   'spot.comment',
-  'spot.topo'
+  'spot.topo',
+  'spot.data'
 ])
 .config(
     [ '$stateProvider', '$urlRouterProvider',
@@ -24,6 +25,10 @@ angular.module('spot', [
                     'spot.topo': {
                         templateUrl:'/js/app/spot/topo/topo.tpl.html',
                         controller: 'TopoController'
+                    },
+                    'spot.data': {
+                        templateUrl:'/js/app/spot/data/data.tpl.html',
+                        controller: 'DataController'
                     }
                 },
                 data: {
@@ -34,12 +39,12 @@ angular.module('spot', [
           .state('spot.comment', {  
               url:'/comment',
               views: {
-                'newCommentButton': {
-                  template: ''
+                'comment.action': {
+                  template: ' '
                 },
-                'newCommentForm': {
+                'comment.form': {
                   templateUrl:'/js/app/spot/comment/comment.edit.tpl.html',
-                  controller: 'CommentController'
+                  controller:'CommentController'
                 }
               }
           })
@@ -55,6 +60,18 @@ angular.module('spot', [
               }
             }
           })
+          .state('spot.data', {  
+            url:'/data',
+            views: {
+              'data.action': {
+                template: '<a class="btn btn-success" ng-click="save()"><small><i class="fa fa-success"></i></small> Save changes</a>'
+              },
+              'data.main': {
+                templateUrl:'/js/app/spot/data/data.edit.tpl.html',
+                controller: 'DataEditController'
+              }
+            }
+          })
       }
     ]
   )
@@ -63,10 +80,11 @@ angular.module('spot', [
     $templateCache.put('comment.tpl.html',html);
   });
 })
-.controller('SpotController', function ($scope, $state, spotsService, utilsService, $stateParams) {
+.controller('SpotController', function ($scope, $state, spotsService, utilsService, $stateParams, $sce) {
 
     $scope.spot = {};
     $scope.comments = [];
+    $scope.topo = {};
 
     init();
 
@@ -79,6 +97,16 @@ angular.module('spot', [
 
         $scope.comments = spotsService.getComments($stateParams.id).then(function(data){
           $scope.comments = data;
+        });
+
+        $scope.topo = spotsService.getTopo($stateParams.id).then(function(data){
+          $scope.topo = data;
+          // trustAsHtml is necessary to bind the html in a dom element
+          $scope.safeTopoText = $sce.trustAsHtml($scope.topo.text);
+        });
+
+        $scope.data = spotsService.getData($stateParams.id).then(function(data){
+          $scope.data = data;
         });
     }
 });
