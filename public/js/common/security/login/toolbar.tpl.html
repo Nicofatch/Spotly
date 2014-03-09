@@ -4,10 +4,11 @@
 	    <button type="submit" class="btn btn-success">Sign Up</button>
 	</form>
 	<!-- else -->
-    <li ng-if="isAuthenticated()"><a href="/maps/#"><i class="icon-globe icon-large"></i> Maps</a></li>
+    <li ng-if="isAuthenticated()"><a ui-sref="activity"><i class="icon-globe icon-large"></i> Activity</a></li>
     <li ng-if="isAuthenticated()" class="dropdown nav-img">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/Avatar-128.png" class="img-small"> {{currentUser.username}}</a>
         <ul class="dropdown-menu">
+          <li><a ui-sref="user">Profile</a></li>
           <li><a ng-click="logout()">Logout</a></li>
         </ul>
     </li>

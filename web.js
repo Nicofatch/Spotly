@@ -81,13 +81,10 @@ security.initialize();
 
 // Site navigation requests
 app.get('/',basic_routes.app);
-// app.get('/maps',pass.ensureAuthenticated,basic_routes.maps);
-// app.get('/login',user_routes.getLogin);
+
 app.post('/login',security.login);
 app.post('/logout',security.logout);
-// app.get('/logout',user_routes.logout);
-// app.get('/explore',basic_routes.explore);
-// app.get('/spot',basic_routes.spot);
+
 app.get('/current-user',user_routes.currentUser);
 app.get('/authenticated-user',user_routes.authenticatedUser);
 app.get('/admin-user',user_routes.adminUser);
@@ -106,8 +103,6 @@ app.get('/api/tags/:id',tags.findById);
 app.post('/api/tags',tags.add);
 app.put('/api/tags/:id',tags.update);
 app.delete('/api/tags/:id',tags.delete);
-
-app.get('/api/spots/generate', spots.generate);
 
 app.get('/api/spots/:k/:lng/:lat',spots.search);
 app.put('/api/spots/:id',spots.update);

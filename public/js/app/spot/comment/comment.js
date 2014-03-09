@@ -16,20 +16,19 @@ angular.module('spot.comment',[
 
   $scope.insertComment = function () {
 
-    
     var newComment = {
       'title': $scope.comment.title,
       'body': $scope.comment.body,
       'pictures':$scope.comment.pictures || [],
       'spot_id':$scope.spot._id,  
-      'author_id':0
+      'author_id':$scope.currentUser._id
     };
     
-      spotsService.insertComment(newComment).then(function(data) {
+    spotsService.insertComment(newComment).then(function(data) {
         // Nothing
-      });
+    });
 
-      $scope.comments.push(data);
+    $scope.comments.push(newComment);
 
        // Redirect to parent (map)
        $state.go('spot');

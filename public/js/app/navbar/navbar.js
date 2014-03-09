@@ -13,8 +13,8 @@ angular.module('navbar',['security','services.httpRequestTracker'])
         //console.log($state);
         $scope.search = $state.current.data.search;
         $scope.fixed = $state.current.data.fixed;
-        $scope.isAuthenticated = security.isAuthenticated;
-        $scope.isAdmin = security.isAdmin;;
+        $rootScope.isAuthenticated = security.isAuthenticated;
+        $rootScope.isAdmin = security.isAdmin;;
 
         $rootScope.k = $state.params.k;
         $rootScope.l = {};

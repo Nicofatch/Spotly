@@ -6,7 +6,7 @@ var filterUser = function(user) {
   if ( user ) {
     return {
       user : {
-        id: user._id.$oid,
+        _id: user._id,
         email: user.email,
         username: user.username,
         admin: user.admin

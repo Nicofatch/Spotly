@@ -1,4 +1,5 @@
-var connection = require('./connection.js');
+var connection = require('./connection.js')
+    ,activity = require('./activity.js');
 
 var db=connection.db;
 var BSON=connection.BSON;
@@ -44,6 +45,18 @@ exports.add = function(req, res) {
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
                 res.send(result[0]);
+                // Add corresponding activity
+                activity.add(
+                    {
+                        body:{
+                            type:'story',
+                            method:'add',    
+                            element_id:result[0]._id,
+                            user_id:comment.author_id
+                        }
+                    },
+                    res
+                );
             }
         });
     });

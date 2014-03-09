@@ -11,8 +11,8 @@ var app = angular.module('app', [
   "navbar",
   'services.httpRequestTracker',
   'security',
-  // 'ui.bootstrap.modal',
-  // 'ui.bootstrap.rating'
+  'activity',
+  'user'
   ]).run(
     [ '$rootScope', '$state', '$stateParams','security',
       function ($rootScope, $state, $stateParams, security) {
@@ -22,7 +22,15 @@ var app = angular.module('app', [
           // to active whenever 'contacts.list' or one of its decendents is active.
           $rootScope.$state = $state;
           $rootScope.$stateParams = $stateParams;
+          
+          //Get and store current user info
           security.requestCurrentUser();
+          $rootScope.$watch(function() {
+            return security.currentUser;
+          }, function(currentUser) {
+            $rootScope.currentUser = currentUser;
+          });
+          
       }])
   .config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -30,7 +38,7 @@ var app = angular.module('app', [
   //.value('$anchorScroll', angular.noop)
   .constant('appSettings',{
     apiUri:'/api',
-    apiServer: 'http://192.168.137.10:5000'
+    apiServer: 'http://localhost:5000'
   }); 
 
 angular.module('app').controller('HeaderCtrl',['$scope','$location', '$state',function($scope,$location,$state){
