@@ -6,45 +6,36 @@ angular.module('directives.input')
 		require:'ngModel',
 		link:function (scope, element, attrs, ngModelCtrl) {
 			// To do delete ?
-			ngModelCtrl.$formatters.push(function(val) { return val;});
+			ngModelCtrl.$formatters.push(function(val) { 
+				if (val)
+					return val.value;
+			});
 			var updateModel = function (suggestion) {
-				scope.$apply(function () {
-					//element.datepicker("setDate", element.val());
-					ngModelCtrl.$setViewValue(suggestion.value);
+				scope.$apply(function () {	
+					ngModelCtrl.$setViewValue({
+						value:suggestion.value,
+						type:suggestion.data
+					});
 				});
 			};
-			var onSelectHandler = function(userHandler) {
-				if ( userHandler ) {
-					return function(suggestion) {
-						updateModel();
-						return userHandler(suggestion);
-					};
-				} else {
-					return updateModel;
-				}
-			};
+			
 			var setup = function () {
 				var options = scope.$eval(attrs.tagAutocomplete) || {};
 				options.paramName =  'input',
-		        options.onSelect = updateModel;
-		        options.transformResult = function(response) {
+				options.onSelect = updateModel;
+				options.transformResult = function(response) {
+		            // first line of the JSON is sliced (see server/config/protectJSON.js)
+		            var suggestions = $.map($.parseJSON(response.split("\n").slice(1).join("\n")), function(dataItem) {
+		            	return { value: dataItem.value , data: 'tag' };
+		            });
+		            suggestions.push({value: 'All Sports', data: 'all'});
 		            return {
-		            	// first line of the JSON is sliced (see server/config/protectJSON.js)
-		                suggestions: $.map($.parseJSON(response.split("\n").slice(1).join("\n")), function(dataItem) {
-		                    return { value: dataItem.value , data: dataItem.value };
-		                })
+		            	suggestions:suggestions    
 		            };
 		        }
-				//options.onSelect = onSelectHandler(options.onSelect);
-				//element.bind('change', updateModel);
-				//element.datepicker('destroy');
-				element.autocomplete(options);
-				//ngModelCtrl.$render();
-			};
-			ngModelCtrl.$render = function () {
-				//element.datepicker("setDate", ngModelCtrl.$viewValue);
-			};
-			scope.$watch(attrs.tagAutocomplete, setup, true);
+		        element.autocomplete(options);
+		    };
+		    scope.$watch(attrs.tagAutocomplete, setup, true);
 		}
 	};
 });

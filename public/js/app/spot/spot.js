@@ -80,17 +80,35 @@ angular.module('spot', [
     $templateCache.put('comment.tpl.html',html);
   });
 })
-.controller('SpotController', function ($scope, $state, spotsService, utilsService, $stateParams, $sce) {
+.controller('SpotController', function ($scope, $state, spotsService, utilsService, $stateParams, $sce, $location, $anchorScroll) {
 
     $scope.spot = {};
     $scope.comments = [];
     $scope.topo = {};
 
+    $scope.rate = 5;
+    $scope.max = 5;
+    $scope.isReadonly = false;
+
+    $scope.hoveringOver = function(value) {
+      $scope.overStar = value;
+      $scope.percent = 100 * (value / $scope.max);
+    };
+
+    $scope.ratingStates = [
+    {stateOn: 'fa fa-star', stateOff: 'fa fa-star-o'},
+    {stateOn: 'fa fa-star', stateOff: 'fa fa-star-o'},
+    {stateOn: 'fa fa-star', stateOff: 'fa fa-star-o'},
+    {stateOn: 'fa fa-star', stateOff: 'fa fa-star-o'},
+    {stateOn: 'fa fa-star', stateOff: 'fa fa-star-o'}
+    ];
+
+
     init();
 
     function init() {
         console.log('SpotController - init');
-        
+
         $scope.spot = spotsService.getSpot($stateParams.id).then(function(data){
           $scope.spot = data;
         });
@@ -108,5 +126,11 @@ angular.module('spot', [
         $scope.data = spotsService.getData($stateParams.id).then(function(data){
           $scope.data = data;
         });
+    }
+
+    $scope.scrollToStories = function(){
+      console.log("chatte");
+      $location.hash('stories');
+      $anchorScroll();
     }
 });

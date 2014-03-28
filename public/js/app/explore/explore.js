@@ -3,65 +3,56 @@
 angular.module('explore',['ui.bootstrap'])
 .config(
     [ '$stateProvider', '$urlRouterProvider',
-    function ($stateProvider, $urlRouterProvider) {   
-        $stateProvider
-        .state('explore', {
-            url:'/explore',
-            views: {
-                'navbar': {
-                    templateUrl:'/js/app/navbar/navbar.tpl.html',
-                    controller: 'NavbarController',
+        function ($stateProvider, $urlRouterProvider) {   
+            $stateProvider
+            .state('explore', {
+                url:'/explore',
+                views: {
+                    'navbar': {
+                        templateUrl:'/js/app/navbar/navbar.tpl.html',
+                        controller: 'NavbarController',
+                    },
+                    'main': {
+                        templateUrl:'/js/app/explore/explore.tpl.html',
+                        controller: 'ExploreController'
+                    }
                 },
-                'main': {
-                    templateUrl:'/js/app/explore/explore.tpl.html',
-                    controller: 'ExploreController'
+                data: {
+                    'fixed':true,
+                    'search':true
                 }
-            },
-            data: {
-                'fixed':true,
-                'search':true
-            }
-        })
-        .state('explore.query', {
-            url:'/:k/:address/:lat/:lng',
-        })
-    }
+            })
+            .state('explore.query', {
+                url:'/:k/:l',
+            })
+        }
     ]
-    )
-.controller('ExploreController', function ($scope, $rootScope, $state, spotsService, utilsService, $location, $modal) {
+)
+.controller('ExploreController', function ($scope, $rootScope, $state, spotsService, utilsService, $location, $modal, appSettings) {
 
-    //$scope.spotMap = {};
-    
     function init() {
         console.log('ExploreController - init');
 
         $scope.spots = {};
-
-        //Complete search query
-        if (!$scope.k) {
-            // No keyword filter
-            $scope.k = 'All Sports';
-        }
-        if (!$scope.l.lng || !$scope.l.lat) {
-            /*if ($scope.l) {
-                // Get lng & lat using google location
-
-            } else {*/
-                // Use geolocation
-            $scope.l = "My Location";
+        
+        // Run search query
+        if ($scope.l.type == 'around') {
             getCurrentLocation(function(location){
-                spotsService.searchSpots({k:$scope.k,lat:location.coords.latitude,lng:location.coords.longitude}).then(function(data){
+                spotsService.searchSpots({k:$scope.k.value,lat:location.coords.latitude,lng:location.coords.longitude}).then(function(data){
                     $scope.spots = data;
                 });
             });
-            $scope.location = true;
         } else {
-            spotsService.searchSpots({k:$scope.k,lat:$scope.l.lat,lng:$scope.l.lng}).then(function(data){
-                $scope.spots = data;
+            $.ajax({
+             url: appSettings.apiServer + appSettings.apiUri + "/geocode/json?address="+$scope.l.value+"&sensor=false",
+            }).done(function( data ) {
+                data = JSON.parse(data);
+                $rootScope.l.value = data.results[0].formatted_address;
+                spotsService.searchSpots({k:$scope.k.value,lat:data.results[0].geometry.location.lat,lng:data.results[0].geometry.location.lng}).then(function(data){
+                    $scope.spots = data;
+                });
             });
         }
-        $("#k-xs").val($scope.k);
-        $("#l-xs").val($scope.l);
     }
 
     $scope.$watch('$state.params',function(){
@@ -78,36 +69,5 @@ angular.module('explore',['ui.bootstrap'])
         $scope.spots[index].likes.push("Nicolas");
         spotsService.updateSpot($scope.spots[index]);
     }
-
-    // $scope.openModal = function () {
-    //     var modalInstance = $modal.open({
-    //         templateUrl: 'myModalContent.html',
-    //         controller: ModalInstanceCtrl,
-    //         resolve: {
-    //             items: function () {
-    //                 return $scope.items;
-    //             }
-    //         }
-    //     });
-
-    //     modalInstance.result.then(function (selectedItem) {
-    //         $scope.selected = selectedItem;
-    //     }, function () {
-    //         $log.info('Modal dismissed at: ' + new Date());
-    //     });
-    // };
-
-    // var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
-
-    //     $scope.items = items;
-
-    //     $scope.ok = function () {
-    //         $modalInstance.close();
-    //     };
-
-    //     $scope.cancel = function () {
-    //         $modalInstance.dismiss('cancel');
-    //     };
-    // };
 
 });

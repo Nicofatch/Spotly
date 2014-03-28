@@ -1,9 +1,9 @@
 <div class="panel panel-default" role="spot-item" style="margin-bottom:8px" id="spot-{{_id}}" ng-class="{'spot-selected': isSelected}">
   <div class="panel-body" ng-click="isSelected=true">
     <div class="row">
-      <div class="spot-infos col-lg-12" >
+      <div class="spot-infos col-lg-12" ng-mouseover="isSelected=true">
         <span class="spot-icon-container visible-lg visible-sm visible-md">
-          <button class="btn btn-default btn-select" ng-click="isSelected=true"><span style="font-size:1.2em;"><b>{{displayIndex}}</b></span></button>
+          <button class="btn btn-default btn-select"><span style="font-size:1.2em;"><b>{{displayIndex}}</b></span></button>
         </span>
         <div class="spot-info-container" id="spot-info-{{id}}">
           <!-- <button class="btn btn-default pull-right" ng-click="selectSpot(spot)"><i class="icon-map-marker icon-large"></i></button> -->

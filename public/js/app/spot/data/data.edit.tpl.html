@@ -2,11 +2,11 @@
 	<tbody>
 		<tr ng-repeat="data in data.table">
 			<td>
-				<input type="text" ng-model="data.key" class="form-control input-sm" style="width:32%;float:left;margin-right:8px;display:inline-block;"></input>
+				<input type="text" ng-model="data.key" class="form-control input-sm" style="width:29%;float:left;margin-right:6px;display:inline-block;"></input>
 				<!-- if != stars -->
-				<input ng-if="data.type != 'stars'" type="text" ng-model="data.value" class="form-control input-sm" style="width:32%;text-align:right;float:left;margin-right:8px;display:inline-block;"></input>
+				<input ng-if="data.type != 'stars'" type="text" ng-model="data.value" class="form-control input-sm" style="width:28%;text-align:right;float:left;margin-right:6px;display:inline-block;"></input>
 				<!-- if == stars -->
-				<rating ng-if="data.type == 'stars'" value="data.value" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" rating-states="ratingStates" on-leave="overStar = null" style="margin-right:8px;float:left;padding-top:6px;padding-left:20px;font-size:1.2em"></rating>
+				<rating ng-if="data.type == 'stars'" value="data.value" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" rating-states="ratingStates" on-leave="overStar = null" style="margin-right:6px;float:left;padding-top:6px;padding-left:6px;font-size:1.2em"></rating>
 				
 				<div style="float:right">
 					<div class="btn-group">
@@ -18,7 +18,7 @@
 						</ul>
 					</div>
 				</div>
-				<div class="btn-group" style="float:right;margin-right:8px">
+				<div class="btn-group" style="float:right;margin-right:6px">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:54px">
 						{{data.type}}
 					</button>

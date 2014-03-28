@@ -66,23 +66,21 @@
     <!-- NAV BAR FOR SMALL, MEDIUM & LARGE SCREENS -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <div ng-if="search">
-            <div ng-form name="exploreForm" class="navbar-form navbar-left col-lg-7 col-md-9 col-sm-8 hidden-xs" style="margin-bottom:0px;margin-top:10px;" role="explore" ng-controller="ExploreFormController">
-                <div id="nav-search-spot" class="form-group col-lg-5 col-md-5 col-sm-5">
+            <form class="navbar-form navbar-left hidden-xs" style="float:left;margin-bottom:0px;margin-top:10px;" role="explore" ng-controller="ExploreFormController">
+                <div id="nav-search-spot" class="form-group" style="float:left;width:303px;margin-right:10px">
                     <div class="input-group">
                         <span class="input-group-addon" style="height:34px;line-height:1.428571429;font-size:14px;"><i class="fa fa-map-marker"></i></span>
-                        <input type="text" tag-autocomplete="{{tagsAutocompleteOptions}}" class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="k" name="k" ng-model="k" placeholder="Search"
-                        onblur="if (this.value == '') {this.value = 'All Sports';}" onfocus="this.value = ''" />
+                        <input type="text" tag-autocomplete="{{tagsAutocompleteOptions}}" class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="k" name="k" ng-model="k" placeholder="Search"/>
                     </div>
                 </div>
-                <div id="nav-search-location" class="form-group col-lg-5 col-md-5 col-sm-5">
+                <div id="nav-search-location" class="form-group" style="float:left;width:303px;margin-right:10px">
                     <div class="input-group">
                         <span class="input-group-addon" style="height:34px;line-height:1.428571429;font-size:14px;"><i class="fa fa-location-arrow"></i></span>
-                        <input type="text" loc-autocomplete class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="l" name="l" placeholder="Around"
-                        onblur="if (this.value == '') {this.value = 'My Location';}" ng-model="l" onfocus="this.value = ''"  />
+                        <input type="text" loc-autocomplete class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="l" name="l" placeholder="Around" ng-model="l" />
                     </div>
                 </div>
-                <button id="nav-search-button" ng-click="explore()" type="submit" class="btn btn-primary" style="height:34px;line-height:1.428571429;font-size:14px;"> <i class="fa fa-search fa fa-white"></i></button>
-            </div>
+                <button id="nav-search-button" ng-click="explore()" type="submit" class="btn btn-primary" style="height:34px;line-height:1.428571429;font-size:14px;"> <i class="fa fa-search fa fa-white"></i></input>
+            </form>
         </div>
         
             <login-toolbar></login-toolbar>

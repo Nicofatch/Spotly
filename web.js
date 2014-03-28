@@ -1,3 +1,5 @@
+//test 23dsds cc
+
 var fs = require('fs')
   , express = require('express')
   , http    = require('http')
@@ -91,6 +93,98 @@ app.get('/admin-user',user_routes.adminUser);
 
 
 // API requests
+app.get('/api/place/autocomplete/json',function(req, res){
+  var query = "";
+  for (key in req.query) {
+    query = query + key + "=" + req.query[key] + "\&";
+  }
+  query = query.substring(0, query.length - 1).replace(new RegExp(" ", "g"), '+');
+  
+  var options = {
+    host: 'maps.googleapis.com',
+    port: 443,
+    path: '/maps/api/place/autocomplete/json?'+query,
+    method: 'GET'
+  };
+  https.get(options, function(remoteRes) {
+    var dString;
+    remoteRes.on('data', function(d) {
+      if (dString) {
+        dString = dString + d.toString();
+        res.send(dString);
+      }
+      else
+      {
+        dString = d.toString();
+      }
+    });
+  }).on('error', function(e) {
+    console.error(e);
+  });
+});
+
+app.get('/api/place/details/json',function(req, res){
+  var query = "";
+  for (key in req.query) {
+    query = query + key + "=" + req.query[key] + "\&";
+  }
+  query = query.substring(0, query.length - 1);
+
+  var options = {
+    host: 'maps.googleapis.com',
+    port: 443,
+    path: '/maps/api/place/details/json?'+query,
+    method: 'GET'
+  };
+  https.get(options, function(remoteRes) {
+    var dString;
+    remoteRes.on('data', function(d) {
+      if (dString) {
+        dString = dString + d.toString();
+        res.send(dString);
+      }
+      else
+      {
+        dString = d.toString();
+      }
+    });
+  }).on('error', function(e) {
+    console.error(e);
+  });
+});
+
+app.get('/api/geocode/json',function(req, res){
+  var query = "";
+  for (key in req.query) {
+    query = query + key + "=" + req.query[key] + "\&";
+  }
+  query = query.substring(0, query.length - 1).replace(new RegExp(" ", "g"), '+');;
+  console.log(query);
+
+  var options = {
+    host: 'maps.googleapis.com',
+    port: 443,
+    path: '/maps/api/geocode/json?'+query,
+    method: 'GET'
+  };
+  https.get(options, function(remoteRes) {
+    var dString;
+    remoteRes.on('data', function(d) {
+      if (dString) {
+        dString = dString + d.toString();
+        res.send(dString);
+      }
+      else
+      {
+        dString = d.toString();
+      }
+    });
+  }).on('error', function(e) {
+    console.error(e);
+  });
+});
+
+
 app.get('/api/maps',maps.findAll);
 app.get('/api/maps/:id',maps.findById);
 app.post('/api/maps',maps.add);
@@ -120,11 +214,19 @@ app.post('/api/pictures',pictures.add);
 
 app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 8080;
 var securePort = process.env.SECURE_PORT || 443;
 
+app.configure('dev',function(){
+  var port = 8080;  
+})
+
+app.configure('prod',function(){
+  var port = 80;
+})
+
 server.listen(port, function() {
-  console.log("Listening on " + port);
+  console.log("Listening on " + port + " in " + process.env.NODE_ENV + " mode");
 });
 //secureServer.listen(securePort);
 //console.log('Listening on secure port ' + securePort);

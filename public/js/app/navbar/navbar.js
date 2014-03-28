@@ -3,45 +3,93 @@
 angular.module('navbar',['security','services.httpRequestTracker'])
 
 .controller('NavbarController', function ($scope, appSettings, $rootScope, $state, $stateParams, $location, security, httpRequestTracker) {
-    
+   
     $scope.tagsAutocompleteOptions = {
         serviceUrl: appSettings.apiServer + appSettings.apiUri + '/tags/search/',
     }
 
     function init() {
         console.log('NavbarController - init');
-        //console.log($state);
+                
         $scope.search = $state.current.data.search;
         $scope.fixed = $state.current.data.fixed;
-        $rootScope.isAuthenticated = security.isAuthenticated;
-        $rootScope.isAdmin = security.isAdmin;;
 
-        $rootScope.k = $state.params.k;
-        $rootScope.l = {};
-        $rootScope.l.address = $state.params.address;
-        $rootScope.l.lat = $state.params.lat;
-        $rootScope.l.lng = $state.params.lng;
+        // Get and store in scope authentication parameters
+        $rootScope.isAuthenticated = security.isAuthenticated;
+        $rootScope.isAdmin = security.isAdmin;
+
+        // Init search parameters
+        $rootScope.k = {
+                type:'all',
+                value:''
+            }
+        $rootScope.l ={
+                type:'around',
+                value:''
+            }
+         // Get search parameters and store them in rootscope so that the navbar can access them    
+        if ($state.params.k == 'all') {
+            $rootScope.k.value = 'All Sports';
+            $rootScope.k.type = 'all';    
+        } else {
+            $rootScope.k.value = $state.params.k;
+            $rootScope.l.type = 'tag';    
+        }
+        if ($state.params.l == 'around') {
+            $rootScope.l.value = 'My Location';
+            $rootScope.l.type = 'around';    
+        } else {
+            $rootScope.l.value = $state.params.l;
+            $rootScope.l.type = 'address';    
+        }
     }
+
+    $scope.$watch('$state.params',function(){
+        init();
+    });
 
     $scope.hasPendingRequests = function () {
         return httpRequestTracker.hasPendingRequests();
     };
-
-    $scope.$watch('$state.params',function(){
-        init();
-    })
-
 })
+
 .controller('ExploreFormController', function ($scope, $rootScope, $state) {
-    
+
     $scope.explore = function(){
-        console.log($scope.k);
-        console.log($scope.l);
+        //complete search params if need
+        if (!$scope.k.type) {
+            var k = $scope.k;
+            if (!k.length) {
+                $scope.k = {
+                    value:'All Sports',
+                    type:'all'
+                }
+            } else {
+                $scope.k = {
+                    value:k,
+                    type:'freetext'
+                }
+            }
+        }
+
+        if (!$scope.l.type) {
+            var l = $scope.l;
+            if (!l.length) {
+                $scope.l = {
+                    value:'My Location',
+                    type:'around'
+                }
+            } else {
+                $scope.l = {
+                    value:l,
+                    type:'freetext'
+                }
+            }
+        }
+
         $state.go('explore.query',{
-            k:$scope.k,
-            address:$scope.l.address,
-            lat:$scope.l.lat,
-            lng:$scope.l.lng
+            k: $scope.k.type == 'all' ? 'all' : $scope.k.value,
+            l: $scope.l.type == 'around' ? 'around' : $scope.l.value,
         });
     }
 });

@@ -45,7 +45,7 @@ angular.module('security.service', [
       loginDialog = null;
       console.log('Dialog dismissed');
       queue.cancelAll();
-      redirect();
+      //redirect();
     })
     //loginDialog.open('security/login/form.tpl.html', 'LoginFormController').then(onLoginDialogClose);
   }
