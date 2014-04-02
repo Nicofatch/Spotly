@@ -1,0 +1,33 @@
+<div  ui-view="spot.header" autoscroll="false">
+	<div class="pull-left">
+		<h1 style="margin-top:0;margin-bottom:0">
+			<strong>{{spot.title}}</strong>
+		</h1>
+	</div>
+
+	<div class="pull-right" style="padding-left:8px" autoscroll="false">
+		<a class="btn btn-default" ui-sref="spot.edit"><small><i class="fa fa-edit"></i></small> Edit</a>
+	</div>
+
+	<div class="pull-right" style="padding-left:8px">
+		<button class="btn btn-default" type="button"><i class="fa fa-bookmark"></i> <b>SAVE</b></button>
+	</div>
+	<div class="pull-right">
+		<div class="btn btn-group" style="padding:0">
+			<button class="btn btn-default" type="button"><i class="fa fa-heart"></i></button>
+			<button class="btn btn-default" type="button" disabled><b>{{spot.likes.length}}</b></button>
+		</div>
+	</div>
+	<div style="clear:both"></div>
+	<p style="margin-bottom:0;margin-top:7px" class="pull-left"><i class="fa fa-home"></i> {{spot.address.value}}</p>
+	<div class="pull-right" style="padding-left:8px">
+		<div class="input-group" style="width:180px">
+			<input type="text" class="form-control" value="http://...">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button"><b>SHARE IT</b></button>
+			</span>
+		</div>
+	</div>
+
+	<div style="clear:both"></div>
+</div>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="css/libs/bootstrap.custo.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/libs/leaflet.awesome-markers.css" />
+  <link rel="stylesheet" href="css/libs/select2.css">
+  <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Nav bar -->
+    <nav class="navbar navbar-default" role="navigation">
+
+      <div class="navbar-header">
+        
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <i style="color:#777777" class="icon-search icon-large"></i>
+        </button>
+        <a class="navbar-brand" href="#/" style="font-family: 'Grand Hotel', cursive;font-size:2em;">Spotly</a>
+        <ul class="nav navbar-nav visible-xs pull-right" id="navbar-short">
+             <li><a href="#/map"><i class="icon-map-marker icon-large"></i></a></li>
+             <li><a href="#/maps"><i class="icon-globe   icon-large"></i></a></li>
+             <li><a href=""><span class="badge" id="badge-notification">8</span></a></li>
+             <li><a href="maps.html" id="nav-maps" style="padding-top:0"><img src="img/Avatar-128.png" id="nav-avatar"></a></li>
+        </ul>
+      </div>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+        <form class="navbar-form navbar-left col-lg-7 col-md-8 col-sm-7" role="search">
+          <div id="nav-search-spot" class="form-group col-lg-5 col-sm-5">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="icon-map-marker icon-large"></i></span>
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+          </div>
+          <div id="nav-search-location" class="form-group col-lg-5 col-sm-5">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="icon-location-arrow icon-large"></i></span>
+              <input type="text" class="form-control" placeholder="Around">
+            </div>
+          </div>
+          <button id="nav-search-button" type="submit" class="btn btn-primary"> <i class="icon-search icon-white"></i></button>
+        </form> 
+          <ul class="pull-right nav navbar-nav" id="navbar-full">
+             <li><a href="#/map"><i class="icon-map-marker icon-large"></i> New Spot</a></li>
+             <li><a href="#/maps"><i class="icon-globe icon-large"></i> Maps</a></li>
+             <li><a href=""><span class="badge" id="badge-notification">8</span></a></li>
+             <li><a href="maps.html" id="nav-maps"><img src="img/Avatar-128.png" id="nav-avatar"> Chaton</a></li>
+           </ul>   
+           <ul class="pull-right nav navbar-nav visible-sm" id="navbar-short">
+             <li><a href="#/map"><i class="icon-map-marker icon-large"></i></a></li>
+             <li><a href="#/maps"><i class="icon-globe   icon-large"></i></a></li>
+             <li><a href=""><span class="badge" id="badge-notification">8</span></a></li>
+             <li><a href="maps.html" id="nav-maps"><img src="img/Avatar-128.png" id="nav-avatar"></a></li>
+           </ul>
+
+
+         </div>
+       </nav>
+
+       <div id="main">
+	 <%- body %>
+       </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+          <small>
+            <hr>
+            <div class="row">
+              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                <ul class="list-unstyled">
+                  <li>GitHub<li>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact & support</a></li>
+                    <li><a href="#">Enterprise</a></li>
+                    <li><a href="#">Site status</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                  <ul class="list-unstyled">
+                    <li>Applications<li>
+                      <li><a href="#">Product for Mac</a></li>
+                      <li><a href="#">Product for Windows</a></li>
+                      <li><a href="#">Product for Eclipse</a></li>
+                      <li><a href="#">Product mobile apps</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                    <ul class="list-unstyled">
+                      <li>More<li>
+                        <li><a href="#">Training</a></li>
+                        <li><a href="#">Students & teachers</a></li>
+                        <li><a href="#">The Shop</a></li>
+                        <li><a href="#">Plans & pricing</a></li>
+                        <li><a href="#">Contact us</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">
+                      <p class="muted pull-right">&copy; 2013 Company Name. All rights reserved</p>
+                    </div>
+                  </div>
+                </small>
+              </footer>
+            </div>
+
+            <!-- Vendor libs -->
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+            <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>-->
+            <!--<script src="js/vendor/angular-ui-router.js"></script>-->
+            <!--<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>-->
+
+            <!-- UI libs -->
+            <!--<script src="js/vendor/leaflet.awesome-markers.js"></script>
+            <script src="js/vendor/select2.min.js"></script>
+            <script src="js/vendor/ui-utils.min.js"></script>-->
+
+            <!-- App libs -->
+            <!--<script src="js/dom/map.js"></script>
+            <script src="app/app.js"></script>
+            <script src="app/states.js"></script>
+            <script src="app/controllers/mapsController.js"></script>
+            <script src="app/controllers/mapController.js"></script>
+            <script src="app/services/mapService.js"></script>
+            <script src="app/services/mapsService.js"></script>
+            <script src="app/directives/displayMarkers.js"></script>-->
+       </body>
+       </html>
+

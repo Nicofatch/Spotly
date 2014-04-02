@@ -1,0 +1,32 @@
+<nav class="navbar navbar-default" ng-class="{'navbar-fixed-top':fixed, 'navbar-unfixed-top':!fixed}" role="navigation" style="min-width:970px">
+    <div class="navbar-header">
+       <!-- APP TITLE -->
+       
+        <a class="navbar-brand" ui-sref="home" style="font-family: 'Grand Hotel', cursive;font-size:2em;padding:13px 15px">
+            <i ng-show="hasPendingRequests()" class="fa fa-spinner fa-spin fa-fw"></i>
+            <i ng-show="!hasPendingRequests()" class="fa fa-map-marker fa-fw"></i> Spotly</a>
+        </a>
+    </div>
+
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <div ng-if="search">
+            <form class="navbar-form navbar-left" style="float:left;margin-bottom:0px;margin-top:10px;" role="explore" ng-controller="ExploreFormController">
+                <div id="nav-search-spot" class="form-group" style="margin-bottom:0px;float:left;width:303px;margin-right:10px">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="height:34px;line-height:1.428571429;font-size:14px;"><i class="fa fa-map-marker"></i></span>
+                        <input type="text" tag-autocomplete="{{tagsAutocompleteOptions}}" class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="k" name="k" ng-model="k" placeholder="Search"/>
+                    </div>
+                </div>
+                <div id="nav-search-location" class="form-group" style="margin-bottom:0px;float:left;width:303px;margin-right:10px">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="height:34px;line-height:1.428571429;font-size:14px;"><i class="fa fa-location-arrow"></i></span>
+                        <input type="text" loc-autocomplete class="form-control" style="height:34px;line-height:1.428571429;font-size:14px;" id="l" name="l" placeholder="Around" ng-model="l" />
+                    </div>
+                </div>
+                <button id="nav-search-button" ng-click="explore()" type="submit" class="btn btn-primary" style="height:34px;line-height:1.428571429;font-size:14px;"> <i class="fa fa-search fa fa-white"></i></input>
+            </form>
+        </div>
+        
+            <login-toolbar></login-toolbar>
+    </div>
+</nav>

@@ -1,0 +1,37 @@
+<div class="panel panel-default" role="spot-item" style="margin-bottom:8px" id="spot-{{_id}}" ng-class="{'spot-selected': isSelected}">
+  <div class="panel-body" ng-click="isSelected=true">
+    <div class="row">
+      <div class="spot-infos col-lg-12" ng-mouseover="isSelected=true">
+        <span class="spot-icon-container visible-lg visible-sm visible-md">
+          <button class="btn btn-default btn-select"><span style="font-size:1.2em;"><b>{{displayIndex}}</b></span></button>
+        </span>
+        <div class="spot-info-container" id="spot-info-{{id}}">
+          <!-- <button class="btn btn-default pull-right" ng-click="selectSpot(spot)"><i class="icon-map-marker icon-large"></i></button> -->
+          <h4 class="list-group-item-heading">
+            <div class="pull-right">
+              
+            </div>
+            <a ui-sref="spot({ id:_id })" role="spot-title" ng-click="$event.stopPropagation()"><b>{{title}}</b></a></br>
+            <div id="map-tags-container">        
+              <span id="map-tags">
+                <span style="display:inline-block">
+                  <!--<span ng-class="tagClass($index)">{{tag}}</span>-->
+                  <small>{{address.value}}</small>
+                </span> 
+              </span> 
+            </div>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-xs-7">
+        <i class="icon icon_swimming fa-2x img-thumbnail" style="padding:5px;width:37px"></i> <i class="icon icon_biking fa-2x img-thumbnail" style="padding:5px;width:37px"></i> <i class="icon icon_skiing fa-2x img-thumbnail" style="padding:5px;width:37px"></i>
+      </div>
+      <div class="col-xs-3 pull-right"><h4 style="margin-top:0px;margin-bottom:0px"><b>32</b></h4><small>COMMENTS</small></div>
+      <div class="col-xs-2 pull-right"><h4 style="margin-top:0px;margin-bottom:0px"><b>1,324</b></h4><small>LOVES</small></div>
+    </div>
+  </div>
+</div>

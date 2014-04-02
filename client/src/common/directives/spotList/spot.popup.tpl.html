@@ -1,0 +1,36 @@
+<div class="row" style="width:400px">
+	<div class="spot-infos col-lg-12" style="margin-bottom:15px">
+		<span class="spot-icon-container">
+			<button class="btn btn-default btn-select">
+				<span style="font-size:1.2em;">
+					<b>{{spot.index}}</b>
+				</span>
+			</button>
+		</span>
+		<div class="spot-info-container">
+			<h4 class="list-group-item-heading">
+				<a href="#/spot/{{spot._id}}" role="spot-title"><b>{{spot.title}}</b></a>
+				<div id="map-tags-container">        
+					<span id="map-tags">
+						<span style="display:inline-block">
+							<!--<span ng-class="tagClass($index)">{{tag}}</span>-->
+							<small>4, Place de Damloup, 31000 Toulouse, France</small>
+						</span> 
+					</span> 
+				</div>
+			</h4>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="panel-default" style="margin-bottom:-14px;margin-left:-5px;margin-right:-5px;">
+		<div class="panel-heading" style="border:0;border-radius:0">
+			<div class="row">
+				<div class="col-xs-7">
+					<i class="icon icon_swimming fa-2x img-thumbnail" style="padding:5px;width:37px"></i> <i class="icon icon_biking fa-2x img-thumbnail" style="padding:5px;width:37px"></i> <i class="icon icon_skiing fa-2x img-thumbnail" style="padding:5px;width:37px"></i>
+				</div>
+				<div class="col-xs-3 pull-right"><h4 style="margin-top:0px;margin-bottom:0px"><b>32</b></h4><small>COMMENTS</small></div>
+				<div class="col-xs-2 pull-right"><h4 style="margin-top:0px;margin-bottom:0px"><b>1,324</b></h4><small>LOVES</small></div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
+        <!--<link rel="stylesheet" href="/css/vendor/bootstrap.custo.css">
+        <link rel="stylesheet" href="/css/style.css">-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="http://fonts.googleapis.com/css?family=Grand+Hotel" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Norican' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+        <!--<link href="/css/vendor/font-awesome.css" rel="stylesheet">-->
+        <!-- <link href="/css/vendor/fonts.css" rel="stylesheet" type="text/css"> -->
+        <link rel="stylesheet" type="text/css" href="/static/<%= grunt.config.get('pkg.name') %>.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/styles.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/icons.css"/>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="/static/jquery.js"></script>
+        <script type="text/javascript" src="/static/angular.js"></script>
+        <script type="text/javascript" src="/static/bootstrap.js"></script>
+        <script type="text/javascript" src="/static/leaflet.js"></script>
+        <script type="text/javascript" src="/static/<%= grunt.config.get('pkg.name') %>.js"></script>
+    </head>
+    <body data-ng-cloak id="body">
+        <!-- NAV BAR -->
+        <div ui-view="navbar" autoscroll="true"></div>
+        <div ng-include=" 'notifications/notifications.tpl.html' " ng-controller="NotificationsController" class="container" ng-show="notifications.getCurrent().length"></div>
+        <div ui-view="main" autoscroll="false"></div>
+        <!--style="margin-top:65px;-->
+          
+        <!-- Vendor libs -->
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>       -->
+        <!--<script src="/js/vendor/jquery.min.js"></script>
+        <script src="/js/vendor/bootstrap.min.js"></script>       -->
+            
+    </body>
+</html>
+
