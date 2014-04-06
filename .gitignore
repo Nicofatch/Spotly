@@ -1,4 +1,2 @@
-public/uploads/
-uploads/
-node_modules/
-public/img/spots/
+client/node_modules/
+server/node_modules/
