@@ -2,21 +2,25 @@ angular.module('security.login.form', [])
 
 // The LoginFormController provides the behaviour behind a reusable form to allow users to authenticate.
 // This controller and its template (login/form.tpl.html) are used in a modal dialog box by the security service.
-.controller('LoginFormController', ['$scope', '$modal','security', 'localizedMessages', function($scope, $modalInstance, security, localizedMessages) {
+.controller('LoginFormController', ['$scope', '$modal','security', 'localizedMessages','message', function($scope, $modalInstance, security, localizedMessages,message) {
 
   // The model for this form 
   // $scope.user = {};
- 
+
   // Any error message from failing to login
   $scope.authError = null;
 
   // The reason that we are being asked to login - for instance because we tried to access something to which we are not authorized
   // We could do something diffent for each reason here but to keep it simple...
   $scope.authReason = null;
-  if ( security.getLoginReason() ) {
+  $scope.message = message;
+  if ($scope.message) {
+    $scope.authReason = $scope.message;
+  }
+  else if ( security.getLoginReason() ) {
     $scope.authReason = ( security.isAuthenticated() ) ?
-      /*localizedMessages.get('login.reason.notAuthorized')*/'login.reason.notAuthorized' :
-      /*localizedMessages.get('login.reason.notAuthenticated')*/'login.reason.notAuthenticated' ;
+      localizedMessages.get('login.reason.notAuthorized') :
+      localizedMessages.get('login.reason.notAuthenticated');
   }
 
   // Attempt to authenticate the user specified in the form's model

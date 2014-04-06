@@ -22,18 +22,6 @@ angular.module('spot', [
 						'main': {
 							templateUrl:'spot/spot.tpl.html',
 							controller: 'SpotController'
-						},
-						'spot.topo': {
-							templateUrl:'spot/topo/topo.tpl.html',
-							controller: 'TopoController'
-						},
-						'spot.data': {
-							templateUrl:'spot/data/data.tpl.html',
-							controller: 'DataController'
-						},
-						'spot.header': {
-							templateUrl:'spot/header/header.tpl.html',
-							controller: 'SpotHeaderController'
 						}
 					},
 					data: {
@@ -52,12 +40,11 @@ angular.module('spot', [
 							templateUrl:'spot/spot.edit.tpl.html',
 							controller: 'SpotEditController' 
 						},
-						'topo.main': {
+						'spot.topo': {
 							templateUrl:'spot/topo/topo.edit.tpl.html'
 						},
-						'data.main': {
-							templateUrl:'spot/data/data.edit.tpl.html',
-							controller: 'DataEditController'
+						'spot.data': {
+							templateUrl:'spot/data/data.edit.tpl.html'
 						}
 					}
 				})
@@ -85,12 +72,13 @@ angular.module('spot', [
 	[ '$scope', 
 	'spotsService',
 	'$stateParams',
-	'$sce',
 	'$location',
 	'$anchorScroll',
 	'$state',
 	'appSettings',
-	function ($scope, spotsService, $stateParams, $sce, $location, $anchorScroll, $state,appSettings) {
+	function ($scope, spotsService, $stateParams, $location, $anchorScroll, $state,appSettings) {
+
+		$scope.id = $stateParams.id;
 
 		$scope.spot = {};
 		$scope.comments = [];
@@ -119,22 +107,12 @@ angular.module('spot', [
 		function init() {
 			console.log('SpotController - init');
 
-			$scope.spot = spotsService.getSpot($stateParams.id).then(function(data){
+			$scope.spot = spotsService.getSpot($scope.id).then(function(data){
 				$scope.spot = data;
 			});
 
-			$scope.comments = spotsService.getComments($stateParams.id).then(function(data){
+			$scope.comments = spotsService.getComments($scope.id).then(function(data){
 				$scope.comments = data;
-			});
-
-			$scope.topo = spotsService.getTopo($stateParams.id).then(function(data){
-				$scope.topo = data;
-					// trustAsHtml is necessary to bind the html in a dom element
-					$scope.safeTopoText = $sce.trustAsHtml($scope.topo.text);
-				});
-
-			$scope.data = spotsService.getData($stateParams.id).then(function(data){
-				$scope.data = data;
 			});
 		}
 
@@ -173,8 +151,7 @@ angular.module('spot', [
 					$scope.$apply();
 				});
 			}
-		};
-		
+		};		
 	}])
 .controller('SpotEditController', 
 	[ '$scope', 
@@ -184,18 +161,27 @@ angular.module('spot', [
 	'$location',
 	'$anchorScroll',
 	'$state',
-	function ($scope, spotsService, $stateParams, $sce, $location, $anchorScroll, $state) {
-		$scope.save = function() {
-			spotsService.updateData($scope.data).then(function(data) {
-				//i18nNotifications.pushForCurrentRoute('spot.data.update.success', 'success');
-			});
-			// trustAsHtml is necessary to bind the html in a dom element      
-			
-			$scope.safeTopoText = $sce.trustAsHtml($scope.topo.text);
+	'security',
+	'$rootScope',
+	function ($scope, spotsService, $stateParams, $sce, $location, $anchorScroll, $state, security,$rootScope) {
+		function init() {
+			if (!$scope.isAuthenticated()) {
+				$state.go('spot');
+				security.showLogin({
+						message:'petit chat'
+					},
+					function(){
+						$state.go('spot.edit');
+					}
+				);
+			}
+		}
 
-			spotsService.updateTopo($scope.topo).then(function(data) {
-				// Nothing
-			});
+		init();
+
+		$scope.save = function() {
+			
+			$rootScope.$broadcast('save');
 
 			spotsService.updateSpot($scope.spot).then(function(data) {
 				// Nothing
@@ -203,4 +189,5 @@ angular.module('spot', [
 
 			$state.go('spot');
 		};
-	}]);
+	}
+]);

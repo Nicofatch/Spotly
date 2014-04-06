@@ -64,9 +64,4 @@ angular.module('explore',['ui.bootstrap'])
         }
     }
 
-    $scope.like = function(index) {
-        $scope.spots[index].likes.push("Nicolas");
-        spotsService.updateSpot($scope.spots[index]);
-    };
-
 }]);

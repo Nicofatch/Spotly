@@ -108,8 +108,8 @@ angular.module("security/login/form.tpl.html", []).run(["$templateCache", functi
     "        </fieldset>\n" +
     "    </form>\n" +
     "    <h4 style=\"text-align:center\">or</h4>\n" +
-    "    <a class=\"btn btn-lg btn-primary btn-block\" id=\"sign-in-google\"><i class=\"icon-google-plus\"></i> Sign In with Google</a>\n" +
-    "    <a class=\"btn btn-lg btn-primary btn-block\" id=\"sign-in-twitter\"><i class=\"icon-twitter\"></i> Sign In with Twitter</a>\n" +
+    "    <a class=\"btn btn-lg btn-primary btn-block\" id=\"sign-in-google\"><i class=\"fa fa-google-plus\"></i> Sign In with Google</a>\n" +
+    "    <a class=\"btn btn-lg btn-primary btn-block\" id=\"sign-in-twitter\"><i class=\"fa fa-twitter\"></i> Sign In with Twitter</a>\n" +
     "    \n" +
     "</div>");
 }]);

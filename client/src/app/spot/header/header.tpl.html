@@ -1,4 +1,4 @@
-<div  ui-view="spot.header" autoscroll="false">
+<div ui-view="spot.header" autoscroll="false">
 	<div class="pull-left">
 		<h1 style="margin-top:0;margin-bottom:0">
 			<strong>{{spot.title}}</strong>
@@ -6,7 +6,7 @@
 	</div>
 
 	<div class="pull-right" style="padding-left:8px" autoscroll="false">
-		<a class="btn btn-default" ui-sref="spot.edit"><small><i class="fa fa-edit"></i></small> Edit</a>
+		<a class="btn btn-default" href ng-click="edit()"><small><i class="fa fa-edit"></i></small> Edit</a>
 	</div>
 
 	<div class="pull-right" style="padding-left:8px">
@@ -14,7 +14,7 @@
 	</div>
 	<div class="pull-right">
 		<div class="btn btn-group" style="padding:0">
-			<button class="btn btn-default" type="button"><i class="fa fa-heart"></i></button>
+			<button class="btn btn-default" type="button" ng-click="like()" ><i class="fa fa-heart"></i></button>
 			<button class="btn btn-default" type="button" disabled><b>{{spot.likes.length}}</b></button>
 		</div>
 	</div>
@@ -22,12 +22,16 @@
 	<p style="margin-bottom:0;margin-top:7px" class="pull-left"><i class="fa fa-home"></i> {{spot.address.value}}</p>
 	<div class="pull-right" style="padding-left:8px">
 		<div class="input-group" style="width:180px">
-			<input type="text" class="form-control" value="http://...">
+			<input type="text" class="form-control" value="{{url}}">
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="button"><b>SHARE IT</b></button>
+				<a class="btn btn-default addthis_button_compact" type="button" addthis:ui_click="true"><b>SHARE IT</b></a>
 			</span>
 		</div>
 	</div>
-
 	<div style="clear:both"></div>
 </div>
+<script type="text/javascript">
+	var addthis_config = {"data_track_addressbar":true};
+	addthis_config.ui_offset_top = 10;
+</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-520613fc20d317d5"></script>

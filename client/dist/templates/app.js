@@ -409,7 +409,7 @@ angular.module("spot/comment/comment.tpl.html", []).run(["$templateCache", funct
 
 angular.module("spot/data/data.edit.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("spot/data/data.edit.tpl.html",
-    "<table class=\"table table-striped table-bordered\" style=\"margin-bottom:0\">\n" +
+    "<table class=\"table table-striped\" style=\"margin-bottom:0\">\n" +
     "	<tbody>\n" +
     "		<tr ng-repeat=\"data in data.table\">\n" +
     "			<td>\n" +
@@ -458,23 +458,19 @@ angular.module("spot/data/data.tpl.html", []).run(["$templateCache", function($t
     "	<ul class=\"nav nav-tabs header-tabs\">\n" +
     "		<li><a href=\"#data-tab\" data-toggle=\"tab2\"><b>Data</b></a></li>\n" +
     "	</ul>\n" +
-    "	<div data-ui-view=\"data.main\" autoscroll=\"false\">\n" +
-    "		<div class=\"row\">\n" +
-    "			<div class=\"col-lg-12\">\n" +
-    "				<table class=\"table table-striped table-bordered\" style=\"margin-bottom:0\">\n" +
-    "					<tbody>\n" +
-    "						<tr ng-repeat=\"data in data.table\">\n" +
-    "							<td ng-if=\"data.type != 'stars'\">{{data.key}} <span class=\"pull-right\"><b>{{data.value}} {{data.type}}</b></span></td>\n" +
-    "							<td ng-if=\"data.type == 'stars'\">{{data.key}} \n" +
-    "								<span class=\"pull-right\">\n" +
-    "									<rating value=\"data.value\" max=\"max\" readonly=\"true\" on-hover=\"hoveringOver(value)\" rating-states=\"ratingStates\" on-leave=\"overStar = null\" style=\"margin-left:8px;font-size:1.2em\"></rating>\n" +
-    "								</span>\n" +
-    "							</td>\n" +
-    "						</tr>\n" +
-    "					</tbody>\n" +
-    "				</table>\n" +
-    "			</div>\n" +
-    "		</div>\n" +
+    "	<div data-ui-view=\"spot.data\" autoscroll=\"false\">\n" +
+    "		<table class=\"table table-striped\" style=\"margin-bottom:0\">\n" +
+    "			<tbody>\n" +
+    "				<tr ng-repeat=\"data in data.table\">\n" +
+    "					<td ng-if=\"data.type != 'stars'\">{{data.key}} <span class=\"pull-right\"><b>{{data.value}} {{data.type}}</b></span></td>\n" +
+    "					<td ng-if=\"data.type == 'stars'\">{{data.key}} \n" +
+    "						<span class=\"pull-right\">\n" +
+    "							<rating value=\"data.value\" max=\"max\" readonly=\"true\" on-hover=\"hoveringOver(value)\" rating-states=\"ratingStates\" on-leave=\"overStar = null\" style=\"margin-left:8px;font-size:1.2em\"></rating>\n" +
+    "						</span>\n" +
+    "					</td>\n" +
+    "				</tr>\n" +
+    "			</tbody>\n" +
+    "		</table>\n" +
     "	</div>\n" +
     "</div>\n" +
     "<script>\n" +
@@ -501,7 +497,7 @@ angular.module("spot/header/header.edit.tpl.html", []).run(["$templateCache", fu
 
 angular.module("spot/header/header.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("spot/header/header.tpl.html",
-    "<div  ui-view=\"spot.header\" autoscroll=\"false\">\n" +
+    "<div ui-view=\"spot.header\" autoscroll=\"false\">\n" +
     "	<div class=\"pull-left\">\n" +
     "		<h1 style=\"margin-top:0;margin-bottom:0\">\n" +
     "			<strong>{{spot.title}}</strong>\n" +
@@ -509,7 +505,7 @@ angular.module("spot/header/header.tpl.html", []).run(["$templateCache", functio
     "	</div>\n" +
     "\n" +
     "	<div class=\"pull-right\" style=\"padding-left:8px\" autoscroll=\"false\">\n" +
-    "		<a class=\"btn btn-default\" ui-sref=\"spot.edit\"><small><i class=\"fa fa-edit\"></i></small> Edit</a>\n" +
+    "		<a class=\"btn btn-default\" href ng-click=\"edit()\"><small><i class=\"fa fa-edit\"></i></small> Edit</a>\n" +
     "	</div>\n" +
     "\n" +
     "	<div class=\"pull-right\" style=\"padding-left:8px\">\n" +
@@ -517,7 +513,7 @@ angular.module("spot/header/header.tpl.html", []).run(["$templateCache", functio
     "	</div>\n" +
     "	<div class=\"pull-right\">\n" +
     "		<div class=\"btn btn-group\" style=\"padding:0\">\n" +
-    "			<button class=\"btn btn-default\" type=\"button\"><i class=\"fa fa-heart\"></i></button>\n" +
+    "			<button class=\"btn btn-default\" type=\"button\" ng-click=\"like()\" ><i class=\"fa fa-heart\"></i></button>\n" +
     "			<button class=\"btn btn-default\" type=\"button\" disabled><b>{{spot.likes.length}}</b></button>\n" +
     "		</div>\n" +
     "	</div>\n" +
@@ -525,15 +521,19 @@ angular.module("spot/header/header.tpl.html", []).run(["$templateCache", functio
     "	<p style=\"margin-bottom:0;margin-top:7px\" class=\"pull-left\"><i class=\"fa fa-home\"></i> {{spot.address.value}}</p>\n" +
     "	<div class=\"pull-right\" style=\"padding-left:8px\">\n" +
     "		<div class=\"input-group\" style=\"width:180px\">\n" +
-    "			<input type=\"text\" class=\"form-control\" value=\"http://...\">\n" +
+    "			<input type=\"text\" class=\"form-control\" value=\"{{url}}\">\n" +
     "			<span class=\"input-group-btn\">\n" +
-    "				<button class=\"btn btn-default\" type=\"button\"><b>SHARE IT</b></button>\n" +
+    "				<a class=\"btn btn-default addthis_button_compact\" type=\"button\" addthis:ui_click=\"true\"><b>SHARE IT</b></a>\n" +
     "			</span>\n" +
     "		</div>\n" +
     "	</div>\n" +
-    "\n" +
     "	<div style=\"clear:both\"></div>\n" +
-    "</div>");
+    "</div>\n" +
+    "<script type=\"text/javascript\">\n" +
+    "	var addthis_config = {\"data_track_addressbar\":true};\n" +
+    "	addthis_config.ui_offset_top = 10;\n" +
+    "</script>\n" +
+    "<script type=\"text/javascript\" src=\"//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-520613fc20d317d5\"></script>");
 }]);
 
 angular.module("spot/spot.edit.tpl.html", []).run(["$templateCache", function($templateCache) {
@@ -561,42 +561,32 @@ angular.module("spot/spot.tpl.html", []).run(["$templateCache", function($templa
     "\n" +
     "	<div class=\"panel panel-default\">\n" +
     "		<!-- PANEL HEADING -->\n" +
-    "		<div class=\"panel-heading\" ng-include=\"'spot/header/header.tpl.html'\"></div>\n" +
-    "\n" +
-    "\n" +
+    "		<div class=\"panel-heading\" ng-controller=\"SpotHeaderController\" ng-include=\"'spot/header/header.tpl.html'\"></div>\n" +
     "\n" +
     "		<!-- PANEL BODY -->\n" +
     "		<div class=\"panel-body\">\n" +
-    "			<!-- MAP TITLE -->\n" +
-    "\n" +
-    "\n" +
-    "			<div  style=\"clear:both\" id=\"map-left\" class=\"col-lg-12\" ng-if=\"editMode\">\n" +
+    "			<div  style=\"padding:0\" id=\"map-left\" class=\"col-lg-12\" ng-if=\"editMode\">\n" +
     "				<div class=\"panel panel-default\">\n" +
     "					<div class=\"panel-body\">\n" +
     "						<map loc=\"{{spot.loc}}\" mode=\"{{mapMode()}}\" on-move=\"updateAddress(loc)\" class=\"map\"></map>\n" +
     "					</div>\n" +
     "				</div>\n" +
     "			</div>\n" +
-    "			<!-- LEFT ZONE -->\n" +
     "			<div  style=\"clear:both\" id=\"map-left\" class=\"col-lg-9\">      \n" +
-    "				<!-- TABS -->\n" +
-    "				\n" +
     "				<div class=\"panel panel-default panel-body\" ng-if=\"!editMode\">\n" +
     "					<div class=\"row\">\n" +
     "						<img src=\"http://www.raquette-evasion.com/ori-trek-randonnee-vercors-690-euros-403_382.jpg\" class=\"col-lg-5\">\n" +
     "						<div class=\"col-lg-7\">\n" +
-    "						\n" +
     "							<div style=\"margin-bottom:7px\">\n" +
     "								<i class=\"icon icon_trekking fa-3x img-thumbnail fa-fw\" style=\"color:#031634\"></i>\n" +
     "								<i class=\"icon icon_skiing fa-3x img-thumbnail fa-fw\" style=\"color:#031634\"></i>\n" +
     "								<i class=\"icon icon_swimming fa-3x img-thumbnail fa-fw\" style=\"color:#031634\"></i>\n" +
     "							</div>\n" +
-    "								<!--<p><rating value=\"3.5\" max=\"max\" readonly=\"false\" on-hover=\"hoveringOver(value)\" rating-states=\"ratingStates\" on-leave=\"overStar = null\" style=\"font-size:2em;color:#CDB380;\"></rating> based on <strong><a href ng-click=\"scrollToStories()\">{{comments.length}} stories</a></strong></p>-->\n" +
     "							<div class=\"row\">\n" +
     "								<div class=\"col-lg-4\">\n" +
-    "									<h4 style=\"font-size:2.5em;font-weight:bold;margin-bottom:1px\">1,854</h4>\n" +
+    "									<h4 style=\"font-size:2.5em;font-weight:bold;margin-bottom:1px\">{{spot.likes.length}}</h4>\n" +
     "									<small>LOVES</small>\n" +
-    "									<h4 style=\"font-size:2.5em;font-weight:bold;margin-bottom:1px\">44</h4>\n" +
+    "									<h4 style=\"font-size:2.5em;font-weight:bold;margin-bottom:1px\">{{comments.length}}</h4>\n" +
     "									<small>COMMENTS</small>\n" +
     "									<h4 style=\"font-size:2.5em;font-weight:bold;margin-bottom:1px\">12,423</h4>\n" +
     "									<small>VIEWS</small>\n" +
@@ -712,7 +702,7 @@ angular.module("spot/spot.tpl.html", []).run(["$templateCache", function($templa
     "				\n" +
     "\n" +
     "				<!-- STORIES -->\n" +
-    "				<div class=\"panel panel-default\" id=\"stories\" ng-if=\"!editMode\">\n" +
+    "				<div class=\"panel panel-default\" id=\"stories\" ng-show=\"!editMode\">\n" +
     "					<ul class=\"nav nav-tabs header-tabs\">\n" +
     "						<li><a href=\"#stories\" data-toggle=\"tab3\"><b>Stories ({{comments.length}})</b></a></li>\n" +
     "						<div class=\"pull-right\" data-ui-view=\"comment.action\">\n" +
@@ -750,152 +740,152 @@ angular.module("spot/spot.tpl.html", []).run(["$templateCache", function($templa
     "<!-- JS DOM -->\n" +
     "<script>\n" +
     "\n" +
-    "$(document).ready(function(){\n" +
+    "	$(document).ready(function(){\n" +
     "\n" +
-    "	$('.header-tabs a').click(function (e) {\n" +
-    "		e.preventDefault();\n" +
-    "		$(this).tab('show');\n" +
-    "	})\n" +
-    "	$('.header-tabs').each(function(){\n" +
-    "		$(this).find('a:first').tab('show');\n" +
-    "	});\n" +
+    "		$('.header-tabs a').click(function (e) {\n" +
+    "			e.preventDefault();\n" +
+    "			$(this).tab('show');\n" +
+    "		})\n" +
+    "		$('.header-tabs').each(function(){\n" +
+    "			$(this).find('a:first').tab('show');\n" +
+    "		});\n" +
     "\n" +
-    "	jQuery(\"#slideshow\").amazingslider({\n" +
+    "		jQuery(\"#slideshow\").amazingslider({\n" +
     "\n" +
-    "		jsfolder:'/static/img/',\n" +
-    "		width:690,\n" +
-    "		height:500,\n" +
-    "		skinsfoldername:\"\",\n" +
-    "		loadimageondemand:false,\n" +
-    "		isresponsive:true,\n" +
-    "		autoplayvideo:false,\n" +
-    "		pauseonmouseover:false,\n" +
-    "		addmargin:true,\n" +
-    "		randomplay:false,\n" +
-    "		playvideoonclickthumb:true,\n" +
-    "		slideinterval:5000,\n" +
-    "		enabletouchswipe:true,\n" +
-    "		transitiononfirstslide:false,\n" +
-    "		loop:0,\n" +
-    "		autoplay:false,\n" +
-    "		navplayvideoimage:\"play-32-32-0.png\",\n" +
-    "		navpreviewheight:60,\n" +
-    "		timerheight:2,\n" +
-    "		shownumbering:false,\n" +
-    "		skin:\"Gallery\",\n" +
-    "		textautohide:false,\n" +
-    "		addgooglefonts:true,\n" +
-    "		navshowplaypause:true,\n" +
-    "		navshowplayvideo:true,\n" +
-    "		navshowplaypausestandalonemarginx:8,\n" +
-    "		navshowplaypausestandalonemarginy:8,\n" +
-    "		navbuttonradius:0,\n" +
-    "		navthumbnavigationarrowimageheight:32,\n" +
-    "		navpreviewarrowheight:8,\n" +
-    "		showshadow:false,\n" +
-    "		navfeaturedarrowimagewidth:16,\n" +
-    "		navpreviewwidth:120,\n" +
-    "		googlefonts:\"Inder\",\n" +
-    "		textpositionmarginright:24,\n" +
-    "		bordercolor:\"#ffffff\",\n" +
-    "		navthumbnavigationarrowimagewidth:32,\n" +
-    "		navthumbtitlehovercss:\"text-decoration:underline;\",\n" +
-    "		arrowwidth:32,\n" +
-    "		texteffecteasing:\"easeOutCubic\",\n" +
-    "		texteffect:\"\",\n" +
-    "		navspacing:8,\n" +
-    "		navarrowimage:\"navarrows-28-28-0.png\",\n" +
-    "		ribbonimage:\"ribbon_topleft-0.png\",\n" +
-    "		navwidth:52,\n" +
-    "		showribbon:false,\n" +
-    "		arrowtop:50,\n" +
-    "		timeropacity:0.6,\n" +
-    "		navthumbnavigationarrowimage:\"carouselarrows-32-32-0.png\",\n" +
-    "		navshowplaypausestandalone:false,\n" +
-    "		navpreviewbordercolor:\"#ffffff\",\n" +
-    "		ribbonposition:\"topleft\",\n" +
-    "		navthumbdescriptioncss:\"display:block;position:relative;padding:2px 4px;text-align:left;font:normal 12px Arial,Helvetica,sans-serif;color:#333;\",\n" +
-    "		navborder:2,\n" +
-    "		navthumbtitleheight:20,\n" +
-    "		textpositionmargintop:24,\n" +
-    "		navswitchonmouseover:false,\n" +
-    "		playvideoimage:\"playvideo-64-64-0.png\",\n" +
-    "		arrowimage:\"arrows-32-32-0.png\",\n" +
-    "		textstyle:\"static\",\n" +
-    "		playvideoimageheight:64,\n" +
-    "		navfonthighlightcolor:\"#666666\",\n" +
-    "		showbackgroundimage:false,\n" +
-    "		navpreviewborder:4,\n" +
-    "		navopacity:0.8,\n" +
-    "		shadowcolor:\"#aaaaaa\",\n" +
-    "		navbuttonshowbgimage:true,\n" +
-    "		navbuttonbgimage:\"navbuttonbgimage-28-28-0.png\",\n" +
-    "		textbgcss:\"display:block; position:absolute; top:0px; left:0px; width:100%; height:100%; background-color:#fff; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; opacity:0.7; filter:alpha(opacity=70);\",\n" +
-    "		playvideoimagewidth:64,\n" +
-    "		bottomshadowimagewidth:110,\n" +
-    "		showtimer:true,\n" +
-    "		navradius:0,\n" +
-    "		navshowpreview:false,\n" +
-    "		navmarginy:8,\n" +
-    "		navmarginx:8,\n" +
-    "		navfeaturedarrowimage:\"featuredarrow-16-8-0.png\",\n" +
-    "		navfeaturedarrowimageheight:8,\n" +
-    "		navstyle:\"thumbnails\",\n" +
-    "		textpositionmarginleft:24,\n" +
-    "		descriptioncss:\"display:block; position:relative; font:14px Inder,Arial,Tahoma,Helvetica,sans-serif; color:#333;\",\n" +
-    "		navplaypauseimage:\"navplaypause-48-48-0.png\",\n" +
-    "		backgroundimagetop:-10,\n" +
-    "		arrowstyle:\"mouseover\",\n" +
-    "		timercolor:\"#ffffff\",\n" +
-    "		numberingformat:\"%NUM/%TOTAL \",\n" +
-    "		navfontsize:12,\n" +
-    "		navhighlightcolor:\"#333333\",\n" +
-    "		navimage:\"bullet-24-24-5.png\",\n" +
-    "		navheight:52,\n" +
-    "		navshowplaypausestandaloneautohide:true,\n" +
-    "		navbuttoncolor:\"\",\n" +
-    "		navshowarrow:false,\n" +
-    "		navshowfeaturedarrow:true,\n" +
-    "		titlecss:\"display:block; position:relative; font: 16px Inder,Arial,Tahoma,Helvetica,sans-serif; color:#000;\",\n" +
-    "		ribbonimagey:0,\n" +
-    "		ribbonimagex:0,\n" +
-    "		navshowplaypausestandaloneposition:\"bottomright\",\n" +
-    "		shadowsize:5,\n" +
-    "		arrowhideonmouseleave:1000,\n" +
-    "		navshowplaypausestandalonewidth:48,\n" +
-    "		navshowplaypausestandaloneheight:48,\n" +
-    "		backgroundimagewidth:120,\n" +
-    "		navcolor:\"#999999\",\n" +
-    "		navthumbtitlewidth:120,\n" +
-    "		navpreviewposition:\"top\",\n" +
-    "		arrowheight:32,\n" +
-    "		arrowmargin:8,\n" +
-    "		texteffectduration:1000,\n" +
-    "		bottomshadowimage:\"bottomshadow-110-95-4.png\",\n" +
-    "		border:6,\n" +
-    "		timerposition:\"bottom\",\n" +
-    "		navfontcolor:\"#333333\",\n" +
-    "		navthumbnavigationstyle:\"arrow\",\n" +
-    "		borderradius:0,\n" +
-    "		navbuttonhighlightcolor:\"\",\n" +
-    "		textpositionstatic:\"bottom\",\n" +
-    "		navthumbstyle:\"imageonly\",\n" +
-    "		textcss:\"display:block; padding:8px 16px; text-align:left; \",\n" +
-    "		navbordercolor:\"#ffffff\",\n" +
-    "		navpreviewarrowimage:\"previewarrow-16-8-0.png\",\n" +
-    "		showbottomshadow:true,\n" +
-    "		navdirection:\"horizontal\",\n" +
-    "		textpositionmarginstatic:0,\n" +
-    "		backgroundimage:\"\",\n" +
-    "		navposition:\"bottom\",\n" +
-    "		navpreviewarrowwidth:16,\n" +
-    "		bottomshadowimagetop:95,\n" +
-    "		textpositiondynamic:\"bottomleft\",\n" +
-    "		navshowbuttons:false,\n" +
-    "		navthumbtitlecss:\"display:block;position:relative;padding:2px 4px;text-align:left;font:bold 14px Arial,Helvetica,sans-serif;color:#333;\",\n" +
-    "		textpositionmarginbottom:24,\n" +
-    "		transition:\"\"\n" +
-    "	});\n" +
+    "			jsfolder:'/static/img/',\n" +
+    "			width:690,\n" +
+    "			height:500,\n" +
+    "			skinsfoldername:\"\",\n" +
+    "			loadimageondemand:false,\n" +
+    "			isresponsive:true,\n" +
+    "			autoplayvideo:false,\n" +
+    "			pauseonmouseover:false,\n" +
+    "			addmargin:true,\n" +
+    "			randomplay:false,\n" +
+    "			playvideoonclickthumb:true,\n" +
+    "			slideinterval:5000,\n" +
+    "			enabletouchswipe:true,\n" +
+    "			transitiononfirstslide:false,\n" +
+    "			loop:0,\n" +
+    "			autoplay:false,\n" +
+    "			navplayvideoimage:\"play-32-32-0.png\",\n" +
+    "			navpreviewheight:60,\n" +
+    "			timerheight:2,\n" +
+    "			shownumbering:false,\n" +
+    "			skin:\"Gallery\",\n" +
+    "			textautohide:false,\n" +
+    "			addgooglefonts:true,\n" +
+    "			navshowplaypause:true,\n" +
+    "			navshowplayvideo:true,\n" +
+    "			navshowplaypausestandalonemarginx:8,\n" +
+    "			navshowplaypausestandalonemarginy:8,\n" +
+    "			navbuttonradius:0,\n" +
+    "			navthumbnavigationarrowimageheight:32,\n" +
+    "			navpreviewarrowheight:8,\n" +
+    "			showshadow:false,\n" +
+    "			navfeaturedarrowimagewidth:16,\n" +
+    "			navpreviewwidth:120,\n" +
+    "			googlefonts:\"Inder\",\n" +
+    "			textpositionmarginright:24,\n" +
+    "			bordercolor:\"#ffffff\",\n" +
+    "			navthumbnavigationarrowimagewidth:32,\n" +
+    "			navthumbtitlehovercss:\"text-decoration:underline;\",\n" +
+    "			arrowwidth:32,\n" +
+    "			texteffecteasing:\"easeOutCubic\",\n" +
+    "			texteffect:\"\",\n" +
+    "			navspacing:8,\n" +
+    "			navarrowimage:\"navarrows-28-28-0.png\",\n" +
+    "			ribbonimage:\"ribbon_topleft-0.png\",\n" +
+    "			navwidth:52,\n" +
+    "			showribbon:false,\n" +
+    "			arrowtop:50,\n" +
+    "			timeropacity:0.6,\n" +
+    "			navthumbnavigationarrowimage:\"carouselarrows-32-32-0.png\",\n" +
+    "			navshowplaypausestandalone:false,\n" +
+    "			navpreviewbordercolor:\"#ffffff\",\n" +
+    "			ribbonposition:\"topleft\",\n" +
+    "			navthumbdescriptioncss:\"display:block;position:relative;padding:2px 4px;text-align:left;font:normal 12px Arial,Helvetica,sans-serif;color:#333;\",\n" +
+    "			navborder:2,\n" +
+    "			navthumbtitleheight:20,\n" +
+    "			textpositionmargintop:24,\n" +
+    "			navswitchonmouseover:false,\n" +
+    "			playvideoimage:\"playvideo-64-64-0.png\",\n" +
+    "			arrowimage:\"arrows-32-32-0.png\",\n" +
+    "			textstyle:\"static\",\n" +
+    "			playvideoimageheight:64,\n" +
+    "			navfonthighlightcolor:\"#666666\",\n" +
+    "			showbackgroundimage:false,\n" +
+    "			navpreviewborder:4,\n" +
+    "			navopacity:0.8,\n" +
+    "			shadowcolor:\"#aaaaaa\",\n" +
+    "			navbuttonshowbgimage:true,\n" +
+    "			navbuttonbgimage:\"navbuttonbgimage-28-28-0.png\",\n" +
+    "			textbgcss:\"display:block; position:absolute; top:0px; left:0px; width:100%; height:100%; background-color:#fff; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; opacity:0.7; filter:alpha(opacity=70);\",\n" +
+    "			playvideoimagewidth:64,\n" +
+    "			bottomshadowimagewidth:110,\n" +
+    "			showtimer:true,\n" +
+    "			navradius:0,\n" +
+    "			navshowpreview:false,\n" +
+    "			navmarginy:8,\n" +
+    "			navmarginx:8,\n" +
+    "			navfeaturedarrowimage:\"featuredarrow-16-8-0.png\",\n" +
+    "			navfeaturedarrowimageheight:8,\n" +
+    "			navstyle:\"thumbnails\",\n" +
+    "			textpositionmarginleft:24,\n" +
+    "			descriptioncss:\"display:block; position:relative; font:14px Inder,Arial,Tahoma,Helvetica,sans-serif; color:#333;\",\n" +
+    "			navplaypauseimage:\"navplaypause-48-48-0.png\",\n" +
+    "			backgroundimagetop:-10,\n" +
+    "			arrowstyle:\"mouseover\",\n" +
+    "			timercolor:\"#ffffff\",\n" +
+    "			numberingformat:\"%NUM/%TOTAL \",\n" +
+    "			navfontsize:12,\n" +
+    "			navhighlightcolor:\"#333333\",\n" +
+    "			navimage:\"bullet-24-24-5.png\",\n" +
+    "			navheight:52,\n" +
+    "			navshowplaypausestandaloneautohide:true,\n" +
+    "			navbuttoncolor:\"\",\n" +
+    "			navshowarrow:false,\n" +
+    "			navshowfeaturedarrow:true,\n" +
+    "			titlecss:\"display:block; position:relative; font: 16px Inder,Arial,Tahoma,Helvetica,sans-serif; color:#000;\",\n" +
+    "			ribbonimagey:0,\n" +
+    "			ribbonimagex:0,\n" +
+    "			navshowplaypausestandaloneposition:\"bottomright\",\n" +
+    "			shadowsize:5,\n" +
+    "			arrowhideonmouseleave:1000,\n" +
+    "			navshowplaypausestandalonewidth:48,\n" +
+    "			navshowplaypausestandaloneheight:48,\n" +
+    "			backgroundimagewidth:120,\n" +
+    "			navcolor:\"#999999\",\n" +
+    "			navthumbtitlewidth:120,\n" +
+    "			navpreviewposition:\"top\",\n" +
+    "			arrowheight:32,\n" +
+    "			arrowmargin:8,\n" +
+    "			texteffectduration:1000,\n" +
+    "			bottomshadowimage:\"bottomshadow-110-95-4.png\",\n" +
+    "			border:6,\n" +
+    "			timerposition:\"bottom\",\n" +
+    "			navfontcolor:\"#333333\",\n" +
+    "			navthumbnavigationstyle:\"arrow\",\n" +
+    "			borderradius:0,\n" +
+    "			navbuttonhighlightcolor:\"\",\n" +
+    "			textpositionstatic:\"bottom\",\n" +
+    "			navthumbstyle:\"imageonly\",\n" +
+    "			textcss:\"display:block; padding:8px 16px; text-align:left; \",\n" +
+    "			navbordercolor:\"#ffffff\",\n" +
+    "			navpreviewarrowimage:\"previewarrow-16-8-0.png\",\n" +
+    "			showbottomshadow:true,\n" +
+    "			navdirection:\"horizontal\",\n" +
+    "			textpositionmarginstatic:0,\n" +
+    "			backgroundimage:\"\",\n" +
+    "			navposition:\"bottom\",\n" +
+    "			navpreviewarrowwidth:16,\n" +
+    "			bottomshadowimagetop:95,\n" +
+    "			textpositiondynamic:\"bottomleft\",\n" +
+    "			navshowbuttons:false,\n" +
+    "			navthumbtitlecss:\"display:block;position:relative;padding:2px 4px;text-align:left;font:bold 14px Arial,Helvetica,sans-serif;color:#333;\",\n" +
+    "			textpositionmarginbottom:24,\n" +
+    "			transition:\"\"\n" +
+    "		});\n" +
     "\n" +
     "jQuery(\".story-carousel\").each(function(){\n" +
     "	$(this).amazingslider({\n" +
@@ -1069,7 +1059,7 @@ angular.module("spot/topo/topo.tpl.html", []).run(["$templateCache", function($t
     "	<ul class=\"nav nav-tabs header-tabs\">\n" +
     "		<li><a href=\"#topo-tab\" data-toggle=\"tab2\"><b>Topo</b></a></li>\n" +
     "	</ul>\n" +
-    "	<div class=\"panel-body tab-pane\" id=\"topo-tab\" data-ui-view=\"topo.main\" autoscroll=\"false\">\n" +
+    "	<div class=\"panel-body tab-pane\" id=\"topo-tab\" data-ui-view=\"spot.topo\" autoscroll=\"false\">\n" +
     "		<div class=\"row\">\n" +
     "			<div class=\"col-lg-12\" data-ng-bind-html=\"safeTopoText\"></div>\n" +
     "		</div>\n" +

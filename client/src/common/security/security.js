@@ -20,7 +20,11 @@ angular.module('security.service', [
 
   // Login form dialog stuff
   var loginDialog = null;
-  function openLoginDialog() {
+  function openLoginDialog(options,next) {
+    console.log(options);
+    if (typeof options === 'undefined' || options === null) {
+      options = {};
+    }
     if ( loginDialog ) {
       throw new Error('Trying to open a dialog that is already open!');
     }
@@ -30,6 +34,9 @@ angular.module('security.service', [
       resolve: {
         user: function () {
           return user;
+        },
+        message: function() {
+          return options.message;
         }
       }
     });
@@ -37,9 +44,13 @@ angular.module('security.service', [
       loginDialog = null;
       if ( success ) {
         queue.retryAll();
+        if (typeof next === 'function') {
+          console.log('oki');
+          next();
+        }
       } else {
         queue.cancelAll();
-        redirect();
+        //redirect();
       }
     }, function() {
       loginDialog = null;
@@ -80,8 +91,8 @@ angular.module('security.service', [
     },
 
     // Show the modal login dialog
-    showLogin: function() {
-      openLoginDialog();
+    showLogin: function(options,next) {
+      openLoginDialog(options,next);
     },
 
     // Attempt to authenticate a user by the given email and password

@@ -4,5 +4,6 @@ angular.module('I18N',[])
   'login.error.serverError': "There was a problem with authenticating: {{exception}}.",
   'spot.data.update.success': "Spot data successfully updated",
   'errors.route.changeError': "Route change error",
-  'crud.user.remove.success':"A user with id '{{id}}' was removed successfully.",
+  'login.reason.notAuthorized':"You are not authorized to perform this action.",
+  'login.reason.notAuthenticated':"You must be authenticated to perform this action."
  });
