@@ -43,7 +43,7 @@ var app = angular.module('app', [
   //.value('$anchorScroll', angular.noop)
   .constant('appSettings',{
     apiUri:'/api',
-    apiServer: 'http://ec2-54-72-73-223.eu-west-1.compute.amazonaws.com:8080'
+    apiServer: 'http://192.168.1.15:8080'
   });
 
 angular.module('app').controller('HeaderCtrl',['$scope','$location',function($scope,$location){
